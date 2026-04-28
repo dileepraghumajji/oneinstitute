@@ -1,8 +1,15 @@
 .ticker {
   background: var(--blood);
   overflow: hidden;
-  padding: 18px 0;
+  padding: 12px 0;
   white-space: nowrap;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.ticker:hover .track {
+  animation-play-state: paused;
 }
 
 .track {
@@ -10,8 +17,8 @@
   animation: marquee 18s linear infinite;
 }
 
-.track:hover {
-  animation-play-state: paused;
+.trackReverse {
+  animation-direction: reverse;
 }
 
 .item {
@@ -20,7 +27,7 @@
   letter-spacing: 0.18em;
   text-transform: uppercase;
   color: var(--bone);
-  padding: 0 32px;
+  padding: 6px 32px;
   display: inline-flex;
   align-items: center;
   gap: 32px;
@@ -31,5 +38,10 @@
   height: 5px;
   border-radius: 50%;
   background: rgba(244, 239, 231, 0.5);
+  flex-shrink: 0;
+}
+
+.swordIcon {
+  color: rgba(244, 239, 231, 0.5);
   flex-shrink: 0;
 }

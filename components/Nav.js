@@ -9,8 +9,8 @@ import { useLoading } from '@/context/LoadingContext'
 
 const navLinks = [
   { label: 'Programs', href: '#programs' },
-  { label: 'Schedule', href: '#schedule' },
-  { label: 'Coaches',  href: '#coaches'  },
+  { label: 'Schedule', href: '#schedule'        },
+  { label: 'Coaches',  href: '#coaches-section' },
   { label: 'Contact',  href: '#contact'  },
 ]
 

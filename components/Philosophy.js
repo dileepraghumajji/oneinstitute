@@ -27,7 +27,7 @@ export default function Philosophy() {
   const container = useRef()
 
   useGSAP(() => {
-    // Left column slide in
+    // Column entrance animations
     gsap.from('.philosophy-left-anim', {
       x: -100,
       opacity: 0,
@@ -39,11 +39,45 @@ export default function Philosophy() {
       }
     })
 
-    // Right column slide in
     gsap.from('.philosophy-right-anim', {
       x: 100,
       opacity: 0,
       duration: 1.2,
+      ease: 'power3.out',
+      scrollTrigger: {
+        trigger: container.current,
+        start: 'top 80%',
+      }
+    })
+
+    // Scrub parallax — left drifts up, right drifts down as section scrolls
+    gsap.to('.philosophy-left-anim', {
+      y: -40,
+      ease: 'none',
+      scrollTrigger: {
+        trigger: container.current,
+        start: 'top bottom',
+        end: 'bottom top',
+        scrub: 1,
+      }
+    })
+
+    gsap.to('.philosophy-right-anim', {
+      y: 40,
+      ease: 'none',
+      scrollTrigger: {
+        trigger: container.current,
+        start: 'top bottom',
+        end: 'bottom top',
+        scrub: 1,
+      }
+    })
+
+    // Headline word clip-mask wipe reveal
+    gsap.from('.philosophy-word', {
+      y: '110%',
+      duration: 0.8,
+      stagger: 0.12,
       ease: 'power3.out',
       scrollTrigger: {
         trigger: container.current,
@@ -72,9 +106,11 @@ export default function Philosophy() {
           <p className={styles.overline}>[+] Why Train With Us</p>
 
           <h2 className={styles.quote}>
-            COACHES<br />
-            WHO'VE<br />
-            FOUGHT.
+            {['COACHES', "WHO'VE", 'FOUGHT.'].map(word => (
+              <span key={word} className={styles.wordWrap}>
+                <span className={`${styles.wordInner} philosophy-word`}>{word}</span>
+              </span>
+            ))}
           </h2>
 
           <p className={styles.sub}>

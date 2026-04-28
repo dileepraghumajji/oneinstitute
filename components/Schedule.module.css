@@ -1,0 +1,163 @@
+.section {
+  background: var(--ink);
+  padding: 128px 0;
+  border-top: 1px solid var(--ink-3);
+}
+
+.inner {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 0 96px;
+}
+
+.header {
+  margin-bottom: 64px;
+}
+
+.overline {
+  font-family: var(--font-mono), monospace;
+  font-size: 12px;
+  letter-spacing: 0.18em;
+  color: var(--blood);
+  text-transform: uppercase;
+  margin-bottom: 16px;
+}
+
+.title {
+  font-family: var(--font-display), sans-serif;
+  font-size: clamp(2.5rem, 5vw, 5.5rem);
+  line-height: 0.9;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+  color: var(--bone);
+}
+
+.tableWrapper {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 680px;
+}
+
+.thead th {
+  font-family: var(--font-mono), monospace;
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  color: var(--bone-2);
+  text-transform: uppercase;
+  text-align: left;
+  padding: 0 16px 16px;
+  border-bottom: 1px solid var(--ink-3);
+  white-space: nowrap;
+}
+
+.thDay {
+  padding-left: 0 !important;
+  min-width: 120px;
+}
+
+.thSlot {
+  min-width: 140px;
+}
+
+.row {
+  border-bottom: 1px solid var(--ink-3);
+  transition: background 180ms var(--ease);
+}
+
+.row:hover {
+  background: var(--ink-2);
+}
+
+.row.today {
+  box-shadow: inset 2px 0 0 var(--blood);
+}
+
+.dayCell {
+  font-family: var(--font-sub-display), sans-serif;
+  font-size: 13px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--bone);
+  padding: 20px 0;
+  white-space: nowrap;
+  vertical-align: top;
+}
+
+.row.today .dayCell {
+  color: var(--blood);
+}
+
+.todayBadge {
+  display: inline-block;
+  margin-left: 10px;
+  font-family: var(--font-mono), monospace;
+  font-size: 9px;
+  letter-spacing: 0.12em;
+  color: var(--blood);
+  border: 1px solid var(--blood);
+  padding: 2px 5px;
+  text-transform: uppercase;
+  vertical-align: middle;
+}
+
+.classCell {
+  padding: 16px;
+  vertical-align: top;
+}
+
+.chip {
+  display: inline-flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.chipName {
+  font-family: var(--font-sub-display), sans-serif;
+  font-size: 12px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--bone);
+}
+
+.chip[data-discipline="Boxing"] .chipName    { color: var(--blood); }
+.chip[data-discipline="Muaythai"] .chipName  { color: var(--bone); }
+
+.chipLevel {
+  font-family: var(--font-mono), monospace;
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  color: var(--bone-2);
+}
+
+.empty {
+  font-family: var(--font-mono), monospace;
+  font-size: 12px;
+  color: var(--ink-3);
+}
+
+.note {
+  margin-top: 32px;
+  font-family: var(--font-mono), monospace;
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  color: var(--bone-2);
+  opacity: 0.5;
+}
+
+@media (max-width: 1100px) {
+  .inner { padding: 0 48px; }
+}
+
+@media (max-width: 900px) {
+  .section { padding: 80px 0; }
+}
+
+@media (max-width: 680px) {
+  .inner { padding: 0 24px; }
+  .header { margin-bottom: 40px; }
+}

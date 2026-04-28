@@ -1,81 +1,98 @@
+/* ── Hero — full-bleed cinematic layout ────────────────── */
 .hero {
   position: relative;
-  min-height: 100vh;
-  display: flex;
+  height: 100vh;
+  min-height: 640px;
   background: var(--ink);
   overflow: hidden;
 }
 
-.textCol {
-  flex: 0 0 48%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  padding: 128px 64px 96px;
-  position: relative;
-  z-index: 3;
-}
-
+/* 3D canvas fills the entire hero */
 .ringCol {
   position: absolute;
   inset: 0;
   z-index: 1;
 }
 
-/* Gradient overlay — fades ink into transparency so ring bleeds through */
+/*
+  Two-gradient overlay:
+  1. Bottom-up dark band  — makes the lower text zone readable
+  2. Left vignette        — anchors the eye to the left edge
+*/
 .hero::before {
   content: '';
   position: absolute;
   inset: 0;
-  background: linear-gradient(
-    to right,
-    #0a0a0a 0%,
-    #0a0a0a 28%,
-    rgba(10, 10, 10, 0.88) 44%,
-    rgba(10, 10, 10, 0.55) 58%,
-    rgba(10, 10, 10, 0.15) 75%,
-    transparent 100%
-  );
+  background:
+    linear-gradient(
+      to top,
+      #0a0a0a 0%,
+      #0a0a0a 12%,
+      rgba(10, 10, 10, 0.90) 30%,
+      rgba(10, 10, 10, 0.40) 52%,
+      rgba(10, 10, 10, 0.08) 70%,
+      transparent 85%
+    ),
+    linear-gradient(
+      to right,
+      rgba(10, 10, 10, 0.65) 0%,
+      rgba(10, 10, 10, 0.18) 32%,
+      transparent 55%
+    );
   z-index: 2;
   pointer-events: none;
 }
 
+/* ── Top-left identifier ───────────────────────────────── */
 .roundTag {
+  position: absolute;
+  top: 96px;
+  left: 64px;
+  z-index: 3;
   font-family: var(--font-mono), monospace;
-  font-size: 12px;
-  letter-spacing: 0.16em;
+  font-size: 11px;
+  letter-spacing: 0.2em;
   color: var(--blood);
   text-transform: uppercase;
-  margin-bottom: 40px;
+  margin: 0;
+}
+
+/* ── Bottom-left content stack ─────────────────────────── */
+.bottomContent {
+  position: absolute;
+  bottom: 88px;
+  left: 64px;
+  z-index: 3;
+  max-width: 820px;
+}
+
+.sub {
+  font-family: var(--font-mono), monospace;
+  font-size: 12px;
+  letter-spacing: 0.22em;
+  color: var(--bone-2);
+  text-transform: uppercase;
+  margin: 0 0 20px;
 }
 
 .headline {
   font-family: var(--font-display), sans-serif;
-  font-size: clamp(3.5rem, 6.5vw, 8rem);
-  line-height: 0.88;
-  letter-spacing: -0.02em;
+  font-size: clamp(4.5rem, 9vw, 11rem);
+  line-height: 0.84;
+  letter-spacing: -0.025em;
   text-transform: uppercase;
   color: var(--bone);
+  margin: 0 0 44px;
 }
 
 .accentWord {
   color: var(--blood);
 }
 
-.sub {
-  margin-top: 32px;
-  font-family: var(--font-mono), monospace;
-  font-size: 13px;
-  letter-spacing: 0.18em;
-  color: var(--bone-2);
-  text-transform: uppercase;
-}
-
 .ctaRow {
   display: flex;
   align-items: center;
   gap: 16px;
-  margin-top: 48px;
   flex-wrap: wrap;
 }
 
@@ -86,19 +103,14 @@
   font-size: 13px;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  padding: 16px 32px;
+  padding: 16px 36px;
   text-decoration: none;
   display: inline-block;
   transition: background 180ms var(--ease), transform 100ms;
 }
 
-.btnPrimary:hover {
-  background: var(--blood-deep);
-}
-
-.btnPrimary:active {
-  transform: translateY(1px);
-}
+.btnPrimary:hover  { background: var(--blood-deep); }
+.btnPrimary:active { transform: translateY(1px); }
 
 .btnSecondary {
   color: var(--bone-2);
@@ -106,7 +118,7 @@
   font-size: 13px;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  padding: 16px 32px;
+  padding: 16px 36px;
   text-decoration: none;
   display: inline-block;
   border: 1px solid var(--ink-3);
@@ -118,37 +130,10 @@
   color: var(--bone);
 }
 
-.locationPin {
-  position: absolute;
-  bottom: 48px;
-  right: 48px;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  color: var(--bone-2);
-  font-family: var(--font-mono), monospace;
-  font-size: 12px;
-  letter-spacing: 0.1em;
-  text-decoration: none;
-  z-index: 2;
-  transition: color 180ms;
-}
-
-.locationPin:hover {
-  color: var(--blood);
-}
-
-.locationDot {
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background: var(--blood);
-  flex-shrink: 0;
-}
-
+/* ── Scroll hint — bottom left below CTAs ──────────────── */
 .scrollHint {
   position: absolute;
-  bottom: 48px;
+  bottom: 44px;
   left: 64px;
   display: flex;
   align-items: center;
@@ -158,7 +143,7 @@
   font-size: 11px;
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  z-index: 2;
+  z-index: 3;
 }
 
 .scrollLine {
@@ -185,89 +170,93 @@
   100% { left: 100%; }
 }
 
+/* ── Location — bottom right ───────────────────────────── */
+.locationPin {
+  position: absolute;
+  bottom: 48px;
+  right: 48px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--bone-2);
+  font-family: var(--font-mono), monospace;
+  font-size: 12px;
+  letter-spacing: 0.1em;
+  text-decoration: none;
+  z-index: 3;
+  transition: color 180ms;
+}
+
+.locationPin:hover { color: var(--blood); }
+
+.locationDot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--blood);
+  flex-shrink: 0;
+}
+
+/* ── Responsive ────────────────────────────────────────── */
 @media (max-width: 900px) {
-  .hero {
-    min-height: 100vh;
-    flex-direction: column;
-  }
-
-  .hero::before {
-    background: linear-gradient(
-      to bottom,
-      transparent 0%,
-      rgba(10, 10, 10, 0.4) 20%,
-      rgba(10, 10, 10, 0.8) 50%,
-      #0a0a0a 85%
-    );
-  }
-
-  .textCol {
-    flex: none;
-    width: 100%;
-    padding: 140px 48px 80px;
-    align-items: center;
-    text-align: center;
-  }
-
-  .ringCol {
-    position: relative;
-    height: 50vh;
-    width: 100%;
-    order: -1;
-    margin-top: 40px;
-  }
-
   .roundTag {
-    margin-bottom: 24px;
+    top: 80px;
+    left: 32px;
+    font-size: 10px;
+  }
+
+  .bottomContent {
+    bottom: 72px;
+    left: 32px;
+    right: 32px;
+    max-width: none;
   }
 
   .headline {
-    font-size: clamp(3rem, 12vw, 5rem);
+    font-size: clamp(3rem, 11vw, 5.5rem);
+    margin-bottom: 32px;
   }
 
-  .ctaRow {
-    justify-content: center;
-  }
+  .scrollHint { display: none; }
 
   .locationPin {
-    bottom: 32px;
-    right: 32px;
-  }
-
-  .scrollHint {
-    display: none;
+    bottom: 28px;
+    right: 24px;
+    font-size: 11px;
   }
 }
 
 @media (max-width: 480px) {
-  .textCol {
-    padding: 120px 24px 60px;
+  .roundTag {
+    top: 72px;
+    left: 24px;
   }
 
-  .ringCol {
-    height: 40vh;
-    transform: scale(0.85);
+  .bottomContent {
+    bottom: 60px;
+    left: 24px;
+    right: 24px;
   }
 
   .headline {
-    font-size: 3.5rem;
+    font-size: clamp(2.6rem, 12vw, 4rem);
+    margin-bottom: 28px;
   }
 
   .ctaRow {
     flex-direction: column;
     align-items: stretch;
-    width: 100%;
   }
 
   .btnPrimary,
   .btnSecondary {
-    width: 100%;
     text-align: center;
+    padding: 14px 24px;
   }
 
   .locationPin {
-    bottom: 24px;
-    right: 24px;
+    bottom: 18px;
+    right: 18px;
     font-size: 10px;
   }
 }

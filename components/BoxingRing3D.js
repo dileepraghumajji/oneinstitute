@@ -20,11 +20,11 @@ export default function BoxingRing3D() {
 
     // ── Scene ───────────────────────────────────────────────
     const scene = new THREE.Scene()
-    scene.fog = new THREE.FogExp2(0x0a0a0a, 0.018)
+    scene.fog = new THREE.FogExp2(0x0a0a0a, 0.009)
 
-    const camera = new THREE.PerspectiveCamera(42, w / h, 0.1, 200)
-    camera.position.set(6, 8, 16)
-    camera.lookAt(1, 1.5, 0)
+    const camera = new THREE.PerspectiveCamera(38, w / h, 0.1, 200)
+    camera.position.set(0, 13, 22)
+    camera.lookAt(0, 1, 0)
 
     const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true })
     renderer.setSize(w, h)
@@ -47,12 +47,12 @@ export default function BoxingRing3D() {
     const controls = new OrbitControls(camera, renderer.domElement)
     controls.enableDamping = true
     controls.dampingFactor = 0.05
-    controls.minDistance = 8
-    controls.maxDistance = 25
-    controls.maxPolarAngle = Math.PI / 2.1
-    controls.target.set(1, 1.5, 0)
+    controls.minDistance = 14
+    controls.maxDistance = 32
+    controls.maxPolarAngle = Math.PI / 2.2
+    controls.target.set(0, 1, 0)
     controls.autoRotate = true
-    controls.autoRotateSpeed = 0.8
+    controls.autoRotateSpeed = 0.35
 
     // ── Materials ───────────────────────────────────────────
     const ORANGE   = 0xFF5300
@@ -114,6 +114,16 @@ export default function BoxingRing3D() {
       stepLed.position.set(0, 0.25 + i * 0.35, 5.4 + (2 - i) * 0.8 + 0.38)
       platformGroup.add(stepLed)
     }
+
+    // ── Emissive flash state ─────────────────────────────────
+    let flashActive = false
+    let flashStartTime = null
+
+    const handleRingImpact = () => {
+      flashActive = true
+      flashStartTime = null
+    }
+    window.addEventListener('ring-impact', handleRingImpact)
 
     scene.add(platformGroup)
 
@@ -277,7 +287,7 @@ export default function BoxingRing3D() {
     scene.add(textPlane)
 
     // ── Lighting ────────────────────────────────────────────
-    scene.add(new THREE.AmbientLight(0x111111, 0.5))
+    scene.add(new THREE.AmbientLight(0x111111, 0.8))
 
     const keyLight = new THREE.DirectionalLight(0xfff5e6, 2.5)
     keyLight.position.set(8, 15, 5)
@@ -305,7 +315,7 @@ export default function BoxingRing3D() {
       scene.add(pl)
     })
 
-    const spotLight = new THREE.SpotLight(0xFFFFFF, 4, 30, Math.PI / 6, 0.5, 1)
+    const spotLight = new THREE.SpotLight(0xFFFFFF, 6, 35, Math.PI / 5.5, 0.4, 1)
     spotLight.position.set(0, 15, 0)
     spotLight.target.position.set(0, 1.3, 0)
     spotLight.castShadow = true
@@ -325,7 +335,20 @@ export default function BoxingRing3D() {
     renderer.setAnimationLoop(() => {
       time += 0.016
       controls.update()
-      orangeEmissive.emissiveIntensity = 1.5 + Math.sin(time * 2) * 1.0
+
+      if (flashActive) {
+        if (flashStartTime === null) flashStartTime = time
+        const elapsed = time - flashStartTime
+        if (elapsed < 0.6) {
+          orangeEmissive.emissiveIntensity = 5 - 2.5 * (elapsed / 0.6)
+        } else {
+          flashActive = false
+          orangeEmissive.emissiveIntensity = 1.5 + Math.sin(time * 2) * 1.0
+        }
+      } else {
+        orangeEmissive.emissiveIntensity = 1.5 + Math.sin(time * 2) * 1.0
+      }
+
       composer.render()
     })
 
@@ -342,6 +365,7 @@ export default function BoxingRing3D() {
     window.addEventListener('resize', handleResize)
 
     return () => {
+      window.removeEventListener('ring-impact', handleRingImpact)
       window.removeEventListener('resize', handleResize)
       renderer.setAnimationLoop(null)
       renderer.dispose()

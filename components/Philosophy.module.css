@@ -39,6 +39,16 @@
   color: var(--bone);
 }
 
+.wordWrap {
+  display: block;
+  overflow: hidden;
+  padding-bottom: 0.06em;
+}
+
+.wordInner {
+  display: inline-block;
+}
+
 .sub {
   font-size: 16px;
   color: var(--bone-2);

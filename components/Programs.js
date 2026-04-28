@@ -2,9 +2,12 @@
 
 import { useRef } from 'react'
 import gsap from 'gsap'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { useGSAP } from '@gsap/react'
 import { ChevronRight } from 'lucide-react'
 import styles from './Programs.module.css'
+
+gsap.registerPlugin(ScrollTrigger)
 
 const programs = [
   {
@@ -41,30 +44,67 @@ export default function Programs() {
   const container = useRef()
 
   useGSAP(() => {
-    // Header animation
-    gsap.from('.programs-header-anim', {
-      y: 50,
-      opacity: 0,
-      duration: 1,
-      stagger: 0.2,
-      ease: 'power3.out',
-      scrollTrigger: {
-        trigger: '.programs-header-anim',
-        start: 'top 85%',
-      }
+    const mm = gsap.matchMedia()
+
+    // Desktop: pinned horizontal card reveal
+    mm.add('(min-width: 769px)', () => {
+      gsap.from('.programs-header-anim', {
+        x: -60,
+        opacity: 0,
+        duration: 0.8,
+        stagger: 0.12,
+        ease: 'power3.out',
+        scrollTrigger: {
+          trigger: container.current,
+          start: 'top 80%',
+        }
+      })
+
+      const cards = Array.from(
+        container.current.querySelectorAll('.program-card-anim')
+      )
+
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: container.current,
+          start: 'top top',
+          end: '+=200%',
+          pin: true,
+          scrub: 1,
+          anticipatePin: 1,
+        }
+      })
+
+      cards.forEach((card, i) => {
+        tl.from(card, { x: '110vw', ease: 'power2.out', duration: 1 }, i * 0.3)
+      })
     })
 
-    // Cards staggered animation
-    gsap.from('.program-card-anim', {
-      y: 100,
-      opacity: 0,
-      duration: 1,
-      stagger: 0.15,
-      ease: 'power3.out',
-      scrollTrigger: {
-        trigger: '.program-card-anim',
-        start: 'top 80%',
-      }
+    // Mobile: simple vertical stagger
+    mm.add('(max-width: 768px)', () => {
+      gsap.from('.programs-header-anim', {
+        y: 50,
+        opacity: 0,
+        duration: 1,
+        stagger: 0.2,
+        ease: 'power3.out',
+        scrollTrigger: {
+          trigger: '.programs-header-anim',
+          start: 'top 85%',
+        }
+      })
+
+      gsap.from('.program-card-anim', {
+        y: 100,
+        opacity: 0,
+        duration: 1,
+        stagger: 0.15,
+        ease: 'power3.out',
+        scrollTrigger: {
+          trigger: '.program-card-anim',
+          start: 'top 80%',
+        }
+      })
     })
   }, { scope: container })
 

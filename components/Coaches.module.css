@@ -1,0 +1,197 @@
+.section {
+  background: var(--ink-2);
+  padding: 128px 0;
+  border-top: 1px solid var(--ink-3);
+}
+
+.inner {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 0 96px;
+}
+
+.header {
+  margin-bottom: 80px;
+}
+
+.overline {
+  font-family: var(--font-mono), monospace;
+  font-size: 12px;
+  letter-spacing: 0.18em;
+  color: var(--blood);
+  text-transform: uppercase;
+  margin-bottom: 16px;
+}
+
+.title {
+  font-family: var(--font-display), sans-serif;
+  font-size: clamp(2.5rem, 5vw, 5.5rem);
+  line-height: 0.9;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+  color: var(--bone);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 32px;
+}
+
+/* Card */
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+/* Photo area */
+.photoArea {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 3 / 4;
+  background: var(--ink);
+  border: 1px solid var(--ink-3);
+  overflow: hidden;
+  display: flex;
+  align-items: flex-end;
+  padding: 20px;
+}
+
+/* scan-line texture */
+.photoArea::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    0deg,
+    rgba(0, 0, 0, 0.08) 0px,
+    rgba(0, 0, 0, 0.08) 1px,
+    transparent 1px,
+    transparent 4px
+  );
+  pointer-events: none;
+  z-index: 2;
+}
+
+/* hover orange overlay */
+.photoArea::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(255, 83, 0, 0.15);
+  opacity: 0;
+  transition: opacity 200ms var(--ease);
+  z-index: 3;
+}
+
+.card:hover .photoArea::after {
+  opacity: 1;
+}
+
+.photoTag {
+  position: relative;
+  z-index: 4;
+  font-family: var(--font-mono), monospace;
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  color: var(--bone-2);
+  text-transform: uppercase;
+}
+
+.photoTagAccent {
+  color: var(--blood);
+}
+
+.photoCorner {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  width: 20px;
+  height: 20px;
+  border-top: 1px solid var(--blood);
+  border-right: 1px solid var(--blood);
+  z-index: 4;
+}
+
+/* Card body */
+.cardBody {
+  padding: 24px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  border-bottom: 1px solid var(--ink-3);
+}
+
+.cardId {
+  font-family: var(--font-mono), monospace;
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  color: var(--blood);
+}
+
+.cardName {
+  font-family: var(--font-display), sans-serif;
+  font-size: clamp(1.25rem, 2vw, 1.75rem);
+  letter-spacing: -0.01em;
+  text-transform: uppercase;
+  color: var(--bone);
+  line-height: 1;
+}
+
+.cardTitle {
+  font-family: var(--font-mono), monospace;
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  color: var(--bone-2);
+  text-transform: uppercase;
+}
+
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 4px;
+}
+
+.tag {
+  font-family: var(--font-mono), monospace;
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  color: var(--blood);
+  border: 1px solid var(--blood);
+  padding: 3px 7px;
+}
+
+.record {
+  font-family: var(--font-mono), monospace;
+  font-size: 12px;
+  letter-spacing: 0.1em;
+  color: var(--bone);
+  padding-top: 4px;
+  border-top: 1px solid var(--ink-3);
+}
+
+.bio {
+  font-size: 14px;
+  color: var(--bone-2);
+  line-height: 1.6;
+}
+
+@media (max-width: 1100px) {
+  .inner { padding: 0 48px; }
+}
+
+@media (max-width: 900px) {
+  .section { padding: 80px 0; }
+  .grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+  }
+}
+
+@media (max-width: 600px) {
+  .inner { padding: 0 24px; }
+  .grid { grid-template-columns: 1fr; }
+  .header { margin-bottom: 48px; }
+}

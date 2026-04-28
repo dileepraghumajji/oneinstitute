@@ -64,9 +64,9 @@ export default function Footer() {
           {/* Contact */}
           <div>
             <p className={styles.colTitle}>Contact</p>
-            <a href="tel:7411074751" className={styles.contactItem}>
+            <a href="tel:07411074751" className={styles.contactItem}>
               <Phone size={14} strokeWidth={1.75} />
-              74110 74751
+              074110 74751
             </a>
             <a
               href="https://maps.app.goo.gl/NueVZvaGrQJLBgBB8"
@@ -75,7 +75,9 @@ export default function Footer() {
               className={styles.contactItem}
             >
               <MapPin size={14} strokeWidth={1.75} />
-              Find us on Google Maps
+              Opp. Anand Marg School, Old Dairy Farm,<br />
+              Indira Gandhi Nagar, Adarsh Nagar,<br />
+              Visakhapatnam, AP 530040
             </a>
             <a
               href="https://www.instagram.com/oneinstituteofmartialarts/"
@@ -84,7 +86,7 @@ export default function Footer() {
               className={styles.contactItem}
             >
               <Instagram size={14} strokeWidth={1.75} />
-              Instagram
+              @oneinstituteofmartialarts
             </a>
           </div>
         </div>
