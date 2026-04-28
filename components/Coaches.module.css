@@ -53,9 +53,17 @@
   background: var(--ink);
   border: 1px solid var(--ink-3);
   overflow: hidden;
-  display: flex;
-  align-items: flex-end;
-  padding: 20px;
+}
+
+.coachImage {
+  object-fit: cover;
+  object-position: center top;
+  transition: filter 500ms var(--ease), transform 500ms var(--ease);
+}
+
+.card:hover .coachImage {
+  filter: sepia(0.08) saturate(1.1) brightness(0.85) contrast(1.05) hue-rotate(0deg) !important;
+  transform: scale(1.03);
 }
 
 /* scan-line texture */
@@ -87,20 +95,6 @@
 
 .card:hover .photoArea::after {
   opacity: 1;
-}
-
-.photoTag {
-  position: relative;
-  z-index: 4;
-  font-family: var(--font-mono), monospace;
-  font-size: 10px;
-  letter-spacing: 0.12em;
-  color: var(--bone-2);
-  text-transform: uppercase;
-}
-
-.photoTagAccent {
-  color: var(--blood);
 }
 
 .photoCorner {

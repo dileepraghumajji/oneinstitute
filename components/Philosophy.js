@@ -1,6 +1,7 @@
 'use client'
 
 import { useRef } from 'react'
+import Image from 'next/image'
 import gsap from 'gsap'
 import { useGSAP } from '@gsap/react'
 import styles from './Philosophy.module.css'
@@ -132,11 +133,15 @@ export default function Philosophy() {
         </div>
 
         <div className={`${styles.right} philosophy-right-anim`}>
-          <div className={styles.imgPlaceholder}>
-            <span className={styles.imgTag}>
-              [ Photo — <span className={styles.imgTagAccent}>Coaches</span> ]
-            </span>
-            <span className={styles.imgTag}>Asset pending</span>
+          <div className={styles.imgContainer}>
+            <Image
+              src="/images/coach1.png"
+              alt="ONE Institute boxing coach in fighting stance"
+              fill
+              sizes="(max-width: 900px) 100vw, 50vw"
+              className={`${styles.coachPhoto} brandImage`}
+              priority={false}
+            />
             <div className={styles.cornerAccent} />
           </div>
         </div>

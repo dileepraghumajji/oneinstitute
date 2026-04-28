@@ -6,6 +6,27 @@ import { useGSAP } from '@gsap/react'
 import { Phone } from 'lucide-react'
 import styles from './CTA.module.css'
 
+function handleMagnet(e) {
+  if (typeof window !== 'undefined' && window.matchMedia('(pointer: coarse)').matches) return
+  const btn = e.currentTarget
+  const rect = btn.getBoundingClientRect()
+  const x = (e.clientX - rect.left - rect.width / 2) * 0.25
+  const y = (e.clientY - rect.top - rect.height / 2) * 0.25
+  btn.style.transform = `translate(${x}px, ${y}px)`
+}
+
+function resetMagnet(e) {
+  const btn = e.currentTarget
+  btn.style.transition = 'transform 400ms ease'
+  btn.style.transform = 'translate(0, 0)'
+  setTimeout(() => {
+    if (btn) {
+      btn.style.transition = ''
+      btn.style.transform = ''
+    }
+  }, 400)
+}
+
 export default function CTA() {
   const container = useRef()
   const [form, setForm] = useState({ name: '', phone: '', discipline: '', message: '' })
@@ -142,7 +163,12 @@ export default function CTA() {
                 />
               </div>
 
-              <button type="submit" className={styles.submitBtn}>Book a Class</button>
+              <button
+                type="submit"
+                className={styles.submitBtn}
+                onMouseMove={handleMagnet}
+                onMouseLeave={resetMagnet}
+              >Book a Class</button>
 
               <a href="tel:07411074751" className={styles.phone}>
                 <span className={styles.phoneDot} />

@@ -3,6 +3,8 @@
 import { useEffect } from 'react'
 import SmoothScroll from './SmoothScroll'
 import LoadingScreen from './LoadingScreen'
+import Cursor from './Cursor'
+import Grain from './Grain'
 import { LoadingProvider, useLoading } from '@/context/LoadingContext'
 
 function ClientLayoutContent({ children }) {
@@ -21,6 +23,8 @@ function ClientLayoutContent({ children }) {
     <>
       <LoadingScreen onComplete={setLoaded} />
       <SmoothScroll>{children}</SmoothScroll>
+      <Cursor />
+      {/* <Grain /> */}
     </>
   )
 }

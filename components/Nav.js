@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useEffect, useRef } from 'react'
+import Image from 'next/image'
 import gsap from 'gsap'
 import { useGSAP } from '@gsap/react'
 import styles from './Nav.module.css'
@@ -42,8 +43,14 @@ export default function Nav() {
     <>
       <nav className={`${styles.nav} ${scrolled ? styles.navScrolled : ''}`} ref={container}>
         <a href="#" className={styles.logo}>
-          <span className={styles.logoMark}>1</span>
-          ONE INSTITUTE
+          <Image
+            src="/logo.svg"
+            alt="ONE Institute of Martial Arts"
+            width={220}
+            height={40}
+            className={styles.logoImage}
+            priority
+          />
         </a>
 
         <ul className={styles.links}>
@@ -60,6 +67,7 @@ export default function Nav() {
           className={`${styles.hamburger} ${menuOpen ? styles.open : ''}`}
           onClick={() => setMenuOpen(o => !o)}
           aria-label="Toggle menu"
+          aria-expanded={menuOpen}
         >
           <span /><span /><span />
         </button>

@@ -29,13 +29,47 @@ const jetbrainsMono = JetBrains_Mono({
 })
 
 export const metadata = {
-  title: 'ONE Institute of Martial Arts',
+  metadataBase: new URL('https://oneinstitute.in'),
+  title: 'ONE Institute of Martial Arts — Boxing, Muaythai, Kickboxing',
   description:
-    "Boxing · Muaythai · Kickboxing. Train with coaches who've fought. Walk-ins welcome.",
+    "Professional combat sports training in Boxing, Muaythai, and Kickboxing. Coaches who've fought. Walk-ins welcome.",
+  keywords: [
+    'boxing',
+    'muaythai',
+    'kickboxing',
+    'martial arts',
+    'combat sports',
+    'Visakhapatnam',
+    'ONE Institute',
+    'boxing gym',
+    'fight training',
+    'walk-ins welcome',
+  ],
   openGraph: {
-    title: 'ONE Institute of Martial Arts',
-    description: 'Step in. Round one starts here.',
+    title: 'ONE Institute of Martial Arts — Boxing, Muaythai, Kickboxing',
+    description:
+      "Professional combat sports training. Coaches who've fought. Walk-ins welcome.",
     type: 'website',
+    url: '/',
+    siteName: 'ONE Institute of Martial Arts',
+    images: [
+      {
+        url: '/og-image.jpg',
+        width: 1200,
+        height: 630,
+        alt: 'ONE Institute of Martial Arts — Step in. Round one starts here.',
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'ONE Institute of Martial Arts — Boxing, Muaythai, Kickboxing',
+    description:
+      "Professional combat sports training. Coaches who've fought. Walk-ins welcome.",
+    images: ['/og-image.jpg'],
+  },
+  alternates: {
+    canonical: '/',
   },
 }
 

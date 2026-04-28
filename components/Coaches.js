@@ -1,6 +1,7 @@
 'use client'
 
 import { useRef } from 'react'
+import Image from 'next/image'
 import gsap from 'gsap'
 import { useGSAP } from '@gsap/react'
 import styles from './Coaches.module.css'
@@ -13,6 +14,8 @@ const coaches = [
     disciplines: ['[Boxing]', '[Low Kick]'],
     record: '12W · 3L · 8 KO',
     bio: 'Former national-level competitor. Twelve years on the circuit. Corner man for state champions. Every session runs like a real round.',
+    photo: '/images/coach1.png',
+    photoAlt: 'Boxing coach in Muaythai fighting stance',
   },
   {
     id: '[02]',
@@ -21,6 +24,8 @@ const coaches = [
     disciplines: ['[Muaythai]', '[Kickboxing K1]'],
     record: '24W · 7L · 14 KO',
     bio: 'Trained in Thailand. Certified under the WMF. Clinch, elbows, knees — taught by someone who\'s used them under lights.',
+    photo: '/images/coach2.png',
+    photoAlt: 'Muaythai specialist in the gym',
   },
   {
     id: '[03]',
@@ -29,6 +34,8 @@ const coaches = [
     disciplines: ['[Boxing]', '[Muaythai]', '[Kickboxing K1]'],
     record: '8W · 2L · 5 KO',
     bio: 'Sports science background. Builds fighters from the ground up. Conditioning is non-negotiable here. Show up ready to work.',
+    photo: '/images/coach3.png',
+    photoAlt: 'Fighter celebrating victory in the ring',
   },
 ]
 
@@ -71,9 +78,13 @@ export default function Coaches() {
           {coaches.map(c => (
             <div key={c.id} className={`${styles.card} coach-card-anim`}>
               <div className={styles.photoArea}>
-                <span className={styles.photoTag}>
-                  [ Photo — <span className={styles.photoTagAccent}>Asset pending</span> ]
-                </span>
+                <Image
+                  src={c.photo}
+                  alt={c.photoAlt}
+                  fill
+                  sizes="(max-width: 600px) 100vw, (max-width: 900px) 50vw, 33vw"
+                  className={`${styles.coachImage} brandImage`}
+                />
                 <div className={styles.photoCorner} />
               </div>
 

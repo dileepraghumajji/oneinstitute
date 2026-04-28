@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useCallback } from 'react'
 import * as THREE from 'three'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
 import { EffectComposer } from 'three/examples/jsm/postprocessing/EffectComposer.js'
@@ -10,6 +10,7 @@ import { OutputPass } from 'three/examples/jsm/postprocessing/OutputPass.js'
 
 export default function BoxingRing3D() {
   const containerRef = useRef(null)
+  const sceneRef = useRef({})
 
   useEffect(() => {
     const container = containerRef.current
@@ -53,6 +54,20 @@ export default function BoxingRing3D() {
     controls.target.set(0, 1, 0)
     controls.autoRotate = true
     controls.autoRotateSpeed = 0.35
+
+    // ── 5.3 Auto-rotation pause on hover ────────────────────
+    let autoRotateResumeTimeout = null
+    const handleMouseEnter = () => {
+      controls.autoRotate = false
+      if (autoRotateResumeTimeout) clearTimeout(autoRotateResumeTimeout)
+    }
+    const handleMouseLeave = () => {
+      autoRotateResumeTimeout = setTimeout(() => {
+        controls.autoRotate = true
+      }, 2000)
+    }
+    container.addEventListener('mouseenter', handleMouseEnter)
+    container.addEventListener('mouseleave', handleMouseLeave)
 
     // ── Materials ───────────────────────────────────────────
     const ORANGE   = 0xFF5300
@@ -266,6 +281,88 @@ export default function BoxingRing3D() {
 
     scene.add(ropesGroup)
 
+    // ── 5.1 Particle impact system ───────────────────────────
+    const PARTICLE_COUNT = 300
+    const particlePositions = new Float32Array(PARTICLE_COUNT * 3)
+    const particleVelocities = new Float32Array(PARTICLE_COUNT * 3)
+    const particleAlphas = new Float32Array(PARTICLE_COUNT)
+    const particleLifetimes = new Float32Array(PARTICLE_COUNT)
+
+    const particleGeo = new THREE.BufferGeometry()
+    particleGeo.setAttribute('position', new THREE.BufferAttribute(particlePositions, 3))
+    particleGeo.setAttribute('alpha', new THREE.BufferAttribute(particleAlphas, 1))
+
+    const particleMaterial = new THREE.PointsMaterial({
+      color: 0xFF5300,
+      size: 0.08,
+      transparent: true,
+      opacity: 1,
+      depthWrite: false,
+      blending: THREE.AdditiveBlending,
+    })
+
+    const particles = new THREE.Points(particleGeo, particleMaterial)
+    scene.add(particles)
+
+    let particlesActive = false
+    let particleStartTime = 0
+    const PARTICLE_DURATION = 0.8
+
+    function triggerImpact(x, y, z) {
+      particlesActive = true
+      particleStartTime = time
+      for (let i = 0; i < PARTICLE_COUNT; i++) {
+        const i3 = i * 3
+        particlePositions[i3]     = x
+        particlePositions[i3 + 1] = y
+        particlePositions[i3 + 2] = z
+        // Random velocity in a sphere
+        const theta = Math.random() * Math.PI * 2
+        const phi = Math.acos(2 * Math.random() - 1)
+        const speed = 2 + Math.random() * 5
+        particleVelocities[i3]     = Math.sin(phi) * Math.cos(theta) * speed
+        particleVelocities[i3 + 1] = Math.abs(Math.sin(phi) * Math.sin(theta)) * speed * 1.2
+        particleVelocities[i3 + 2] = Math.cos(phi) * speed
+        particleAlphas[i] = 1.0
+        particleLifetimes[i] = 0.5 + Math.random() * 0.5
+      }
+      particleGeo.attributes.position.needsUpdate = true
+      particleGeo.attributes.alpha.needsUpdate = true
+    }
+
+    // Store triggerImpact on the container element so Hero can access it
+    container.dataset.ringReady = 'true'
+    container.__triggerImpact = triggerImpact
+
+    // Raycaster for click-to-impact
+    const raycaster = new THREE.Raycaster()
+    const pointer = new THREE.Vector2()
+
+    const handleCanvasClick = (e) => {
+      const rect = renderer.domElement.getBoundingClientRect()
+      pointer.x = ((e.clientX - rect.left) / rect.width) * 2 - 1
+      pointer.y = -((e.clientY - rect.top) / rect.height) * 2 + 1
+      raycaster.setFromCamera(pointer, camera)
+      const intersects = raycaster.intersectObject(ringMat)
+      if (intersects.length > 0) {
+        const p = intersects[0].point
+        triggerImpact(p.x, p.y, p.z)
+      } else {
+        // If missed the mat, impact at a default center point
+        triggerImpact(0, 1.4, 0)
+      }
+
+      // Dispatch event for punch-speed tracker
+      window.dispatchEvent(new CustomEvent('ring-punch', { detail: { time: Date.now() } }))
+    }
+    renderer.domElement.addEventListener('click', handleCanvasClick)
+    renderer.domElement.addEventListener('touchstart', (e) => {
+      const touch = e.touches[0]
+      if (touch) {
+        handleCanvasClick({ clientX: touch.clientX, clientY: touch.clientY })
+      }
+    }, { passive: true })
+
     // ── Platform text ────────────────────────────────────────
     const textCanvas = document.createElement('canvas')
     textCanvas.width = 2048; textCanvas.height = 256
@@ -330,12 +427,23 @@ export default function BoxingRing3D() {
     ground.receiveShadow = true
     scene.add(ground)
 
+    // ── 5.4 Glow intensity linked to scroll ──────────────────
+    let glowMultiplier = 1.0
+    const handleGlowChange = (e) => {
+      glowMultiplier = e.detail.intensity
+    }
+    window.addEventListener('ring-glow', handleGlowChange)
+
+    // Store ref for cleanup
+    sceneRef.current = { controls, orangeEmissive }
+
     // ── Animation loop ──────────────────────────────────────
     let time = 0
     renderer.setAnimationLoop(() => {
       time += 0.016
       controls.update()
 
+      // Flash from ring-impact event
       if (flashActive) {
         if (flashStartTime === null) flashStartTime = time
         const elapsed = time - flashStartTime
@@ -343,10 +451,31 @@ export default function BoxingRing3D() {
           orangeEmissive.emissiveIntensity = 5 - 2.5 * (elapsed / 0.6)
         } else {
           flashActive = false
-          orangeEmissive.emissiveIntensity = 1.5 + Math.sin(time * 2) * 1.0
+          orangeEmissive.emissiveIntensity = (1.5 + Math.sin(time * 2) * 1.0) * glowMultiplier
         }
       } else {
-        orangeEmissive.emissiveIntensity = 1.5 + Math.sin(time * 2) * 1.0
+        orangeEmissive.emissiveIntensity = (1.5 + Math.sin(time * 2) * 1.0) * glowMultiplier
+      }
+
+      // Animate particles
+      if (particlesActive) {
+        const elapsed = time - particleStartTime
+        const progress = elapsed / PARTICLE_DURATION
+        if (progress >= 1) {
+          particlesActive = false
+          particleMaterial.opacity = 0
+        } else {
+          particleMaterial.opacity = 1 - progress
+          for (let i = 0; i < PARTICLE_COUNT; i++) {
+            const i3 = i * 3
+            const lifeProgress = Math.min(elapsed / particleLifetimes[i], 1)
+            const easeOut = 1 - Math.pow(1 - lifeProgress, 3) // cubic ease-out
+            particlePositions[i3]     += particleVelocities[i3] * 0.016 * (1 - easeOut)
+            particlePositions[i3 + 1] += (particleVelocities[i3 + 1] * 0.016 * (1 - easeOut)) - 0.003 // gravity
+            particlePositions[i3 + 2] += particleVelocities[i3 + 2] * 0.016 * (1 - easeOut)
+          }
+          particleGeo.attributes.position.needsUpdate = true
+        }
       }
 
       composer.render()
@@ -366,9 +495,16 @@ export default function BoxingRing3D() {
 
     return () => {
       window.removeEventListener('ring-impact', handleRingImpact)
+      window.removeEventListener('ring-glow', handleGlowChange)
       window.removeEventListener('resize', handleResize)
+      container.removeEventListener('mouseenter', handleMouseEnter)
+      container.removeEventListener('mouseleave', handleMouseLeave)
+      if (autoRotateResumeTimeout) clearTimeout(autoRotateResumeTimeout)
+      renderer.domElement.removeEventListener('click', handleCanvasClick)
       renderer.setAnimationLoop(null)
       renderer.dispose()
+      particleGeo.dispose()
+      particleMaterial.dispose()
       logoTexture.dispose()
       textTexture.dispose()
       if (container.contains(renderer.domElement)) {
@@ -377,5 +513,5 @@ export default function BoxingRing3D() {
     }
   }, [])
 
-  return <div ref={containerRef} style={{ width: '100%', height: '100%' }} />
+  return <div ref={containerRef} style={{ width: '100%', height: '100%' }} aria-hidden="true" />
 }

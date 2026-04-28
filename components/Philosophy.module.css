@@ -103,36 +103,27 @@
   position: relative;
 }
 
-.imgPlaceholder {
+.imgContainer {
   aspect-ratio: 3 / 4;
-  background: var(--ink-2);
-  border: 1px solid var(--ink-3);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 12px;
   position: relative;
   overflow: hidden;
+  border: 1px solid var(--ink-3);
+  background: var(--ink-2);
 }
 
-.imgPlaceholder::before {
+/* Subtle blood-orange gradient overlay on the photo */
+.imgContainer::before {
   content: '';
   position: absolute;
   inset: 0;
-  background: linear-gradient(135deg, transparent 60%, rgba(255, 83, 0, 0.08));
+  background: linear-gradient(135deg, transparent 40%, rgba(255, 83, 0, 0.12));
+  z-index: 2;
+  pointer-events: none;
 }
 
-.imgTag {
-  font-family: var(--font-mono), monospace;
-  font-size: 11px;
-  letter-spacing: 0.16em;
-  color: var(--bone-2);
-  text-transform: uppercase;
-}
-
-.imgTagAccent {
-  color: var(--blood);
+.coachPhoto {
+  object-fit: cover;
+  object-position: center top;
 }
 
 .cornerAccent {
@@ -143,6 +134,7 @@
   height: 80px;
   border-top: 1px solid var(--blood);
   border-left: 1px solid var(--blood);
+  z-index: 3;
 }
 
 @media (max-width: 1100px) {

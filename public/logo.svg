@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 280 48" fill="none">
+  <!-- "1" mark box -->
+  <rect x="0" y="4" width="40" height="40" rx="0" stroke="#FF5300" stroke-width="2.5" fill="none"/>
+  <text x="20" y="32" font-family="Arial Black, Arial, sans-serif" font-weight="900" font-size="22" fill="#FF5300" text-anchor="middle">1</text>
+  
+  <!-- "ONE" wordmark -->
+  <text x="54" y="32" font-family="Arial Black, Arial, sans-serif" font-weight="900" font-size="28" letter-spacing="3" fill="#F4EFE7" text-anchor="start">ONE</text>
+  
+  <!-- "INSTITUTE" subtitle -->
+  <text x="132" y="32" font-family="Arial, sans-serif" font-weight="400" font-size="12" letter-spacing="5" fill="#C9C2B4" text-anchor="start">INSTITUTE</text>
+</svg>

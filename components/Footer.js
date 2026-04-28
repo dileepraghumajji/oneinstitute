@@ -31,6 +31,7 @@ export default function Footer() {
               target="_blank"
               rel="noopener noreferrer"
               className={styles.instagramLink}
+              aria-label="Follow ONE Institute on Instagram"
             >
               <Instagram size={16} strokeWidth={1.75} />
               @oneinstituteofmartialarts
@@ -64,7 +65,7 @@ export default function Footer() {
           {/* Contact */}
           <div>
             <p className={styles.colTitle}>Contact</p>
-            <a href="tel:07411074751" className={styles.contactItem}>
+            <a href="tel:07411074751" className={styles.contactItem} aria-label="Call ONE Institute">
               <Phone size={14} strokeWidth={1.75} />
               074110 74751
             </a>
@@ -73,6 +74,7 @@ export default function Footer() {
               target="_blank"
               rel="noopener noreferrer"
               className={styles.contactItem}
+              aria-label="View ONE Institute on Google Maps"
             >
               <MapPin size={14} strokeWidth={1.75} />
               Opp. Anand Marg School, Old Dairy Farm,<br />
@@ -84,6 +86,7 @@ export default function Footer() {
               target="_blank"
               rel="noopener noreferrer"
               className={styles.contactItem}
+              aria-label="Follow ONE Institute on Instagram"
             >
               <Instagram size={14} strokeWidth={1.75} />
               @oneinstituteofmartialarts

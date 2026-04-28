@@ -1,0 +1,95 @@
+.cursorDot {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 6px;
+  height: 6px;
+  background: var(--blood);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9999;
+  transform: translate(-50%, -50%);
+  transition:
+    width 150ms var(--ease),
+    height 150ms var(--ease),
+    border-radius 150ms var(--ease),
+    background 150ms var(--ease);
+}
+
+.cursorRing {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 40px;
+  height: 40px;
+  border: 1px solid var(--blood);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9998;
+  transform: translate(-50%, -50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition:
+    width 220ms var(--ease),
+    height 220ms var(--ease),
+    background 220ms var(--ease),
+    opacity 150ms var(--ease);
+}
+
+.cursorLabel {
+  font-family: var(--font-mono), monospace;
+  font-size: 9px;
+  letter-spacing: 0.1em;
+  color: var(--blood);
+  text-transform: uppercase;
+  user-select: none;
+  opacity: 0;
+  transition: opacity 150ms var(--ease);
+  line-height: 1;
+}
+
+.cursorExpanded {
+  width: 64px;
+  height: 64px;
+  background: rgba(255, 83, 0, 0.1);
+}
+
+.cursorExpanded .cursorLabel {
+  opacity: 1;
+}
+
+.ringHidden {
+  opacity: 0;
+}
+
+/* crosshair state when hovering 3D ring canvas */
+.dotCrosshair {
+  width: 16px;
+  height: 16px;
+  background: transparent;
+  border-radius: 0;
+}
+
+.dotCrosshair::before,
+.dotCrosshair::after {
+  content: '';
+  position: absolute;
+  background: var(--blood);
+}
+
+.dotCrosshair::before {
+  width: 1px;
+  height: 100%;
+  left: 50%;
+  top: 0;
+  transform: translateX(-50%);
+}
+
+.dotCrosshair::after {
+  height: 1px;
+  width: 100%;
+  top: 50%;
+  left: 0;
+  transform: translateY(-50%);
+}

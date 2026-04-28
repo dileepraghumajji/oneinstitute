@@ -148,6 +148,14 @@
   gap: 12px;
 }
 
+.cardCta svg {
+  transition: transform 180ms var(--ease);
+}
+
+.card:hover .cardCta svg {
+  transform: translateX(4px);
+}
+
 /* ── Desktop pin layout ── */
 @media (min-width: 769px) {
   .section {

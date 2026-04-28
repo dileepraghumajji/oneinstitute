@@ -12,6 +12,7 @@
   position: absolute;
   inset: 0;
   z-index: 1;
+  will-change: transform;
 }
 
 /*
@@ -83,6 +84,7 @@
   text-transform: uppercase;
   color: var(--bone);
   margin: 0 0 44px;
+  will-change: transform;
 }
 
 .accentWord {
@@ -197,6 +199,50 @@
   flex-shrink: 0;
 }
 
+/* ── 5.2 Punch-speed panel ─────────────────────────────── */
+.speedPanel {
+  position: absolute;
+  bottom: 100px;
+  right: 48px;
+  z-index: 4;
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity 400ms var(--ease), transform 400ms var(--ease);
+  pointer-events: none;
+}
+
+.speedPanelVisible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.speedLabel {
+  font-family: var(--font-mono), monospace;
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  color: var(--bone-2);
+  text-transform: uppercase;
+}
+
+.speedValue {
+  font-family: var(--font-display), sans-serif;
+  font-size: 48px;
+  line-height: 1;
+  color: var(--blood);
+  display: inline-block;
+}
+
+.speedUnit {
+  font-family: var(--font-mono), monospace;
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  color: var(--bone-2);
+  text-transform: uppercase;
+}
+
 /* ── Responsive ────────────────────────────────────────── */
 @media (max-width: 900px) {
   .roundTag {
@@ -223,6 +269,15 @@
     bottom: 28px;
     right: 24px;
     font-size: 11px;
+  }
+
+  .speedPanel {
+    bottom: 72px;
+    right: 24px;
+  }
+
+  .speedValue {
+    font-size: 36px;
   }
 }
 
@@ -258,5 +313,15 @@
     bottom: 18px;
     right: 18px;
     font-size: 10px;
+  }
+
+  .speedPanel {
+    bottom: 56px;
+    right: 18px;
+    gap: 6px;
+  }
+
+  .speedValue {
+    font-size: 28px;
   }
 }

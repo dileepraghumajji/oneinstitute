@@ -42,6 +42,12 @@
   flex-shrink: 0;
 }
 
+.logoImage {
+  height: 36px;
+  width: auto;
+  display: block;
+}
+
 .links {
   display: flex;
   align-items: center;
