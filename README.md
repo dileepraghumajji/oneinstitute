@@ -1,16 +1,19 @@
-# Professional boxing ring 3D display
+# ONE Institute of Martial Arts
 
-Created with [Omma](https://omma.build)
+Professional boxing ring 3D display and marketing site.
 
 ## Setup
 
 ```bash
-npm install
-npm run dev
+pnpm install
+pnpm dev
 ```
 
 ## Build
 
 ```bash
-npm run build
+pnpm build
 ```
+
+## Legacy Site
+The original static site files (index.html, index.js) have been moved to the `legacy/` directory to prevent interference with the Next.js build system.

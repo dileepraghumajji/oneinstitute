@@ -124,12 +124,13 @@
   top: 72px;
   left: 0;
   right: 0;
-  background: var(--ink-2);
-  border-bottom: 1px solid var(--ink-3);
-  padding: 32px 48px;
+  bottom: 0;
+  background: var(--ink);
+  padding: 48px 24px;
   flex-direction: column;
-  gap: 24px;
+  gap: 32px;
   z-index: 99;
+  overflow-y: auto;
 }
 
 .mobileMenu.open {
@@ -171,6 +172,9 @@
   .cta   { display: none; }
   .hamburger { display: flex; }
   .nav { padding: 0 24px; }
+  .navScrolled {
+    background: var(--ink);
+  }
 }
 
 @media (max-width: 480px) {

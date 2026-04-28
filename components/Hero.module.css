@@ -188,28 +188,50 @@
 @media (max-width: 900px) {
   .hero {
     min-height: 100vh;
+    flex-direction: column;
   }
 
   .hero::before {
     background: linear-gradient(
       to bottom,
       transparent 0%,
-      rgba(10, 10, 10, 0.3) 30%,
-      rgba(10, 10, 10, 0.75) 55%,
-      #0a0a0a 75%
+      rgba(10, 10, 10, 0.4) 20%,
+      rgba(10, 10, 10, 0.8) 50%,
+      #0a0a0a 85%
     );
   }
 
   .textCol {
     flex: none;
     width: 100%;
-    padding: 60vh 32px 60px;
-    align-items: flex-start;
+    padding: 140px 48px 80px;
+    align-items: center;
+    text-align: center;
+  }
+
+  .ringCol {
+    position: relative;
+    height: 50vh;
+    width: 100%;
+    order: -1;
+    margin-top: 40px;
+  }
+
+  .roundTag {
+    margin-bottom: 24px;
+  }
+
+  .headline {
+    font-size: clamp(3rem, 12vw, 5rem);
+  }
+
+  .ctaRow {
+    justify-content: center;
   }
 
   .locationPin {
-    bottom: 24px;
-    right: 24px;
+    bottom: 32px;
+    right: 32px;
   }
 
   .scrollHint {
@@ -219,21 +241,33 @@
 
 @media (max-width: 480px) {
   .textCol {
-    padding: 80px 24px 40px;
+    padding: 120px 24px 60px;
   }
 
   .ringCol {
-    height: 70vw;
+    height: 40vh;
+    transform: scale(0.85);
+  }
+
+  .headline {
+    font-size: 3.5rem;
   }
 
   .ctaRow {
     flex-direction: column;
-    align-items: flex-start;
+    align-items: stretch;
+    width: 100%;
   }
 
   .btnPrimary,
   .btnSecondary {
     width: 100%;
     text-align: center;
+  }
+
+  .locationPin {
+    bottom: 24px;
+    right: 24px;
+    font-size: 10px;
   }
 }
