@@ -1,0 +1,35 @@
+.ticker {
+  background: var(--blood);
+  overflow: hidden;
+  padding: 18px 0;
+  white-space: nowrap;
+}
+
+.track {
+  display: inline-flex;
+  animation: marquee 18s linear infinite;
+}
+
+.track:hover {
+  animation-play-state: paused;
+}
+
+.item {
+  font-family: var(--font-display), sans-serif;
+  font-size: 14px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--bone);
+  padding: 0 32px;
+  display: inline-flex;
+  align-items: center;
+  gap: 32px;
+}
+
+.dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: rgba(244, 239, 231, 0.5);
+  flex-shrink: 0;
+}

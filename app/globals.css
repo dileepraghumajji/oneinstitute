@@ -1,0 +1,61 @@
+:root {
+  --ink:        #0A0A0A;
+  --ink-2:      #161616;
+  --ink-3:      #222222;
+  --bone:       #F4EFE7;
+  --bone-2:     #C9C2B4;
+  --blood:      #FF5300;
+  --blood-deep: #C73D00;
+  --blood-glow: #FF8A4D;
+  --canvas:     #EDE6D8;
+  --ease:       cubic-bezier(0.65, 0, 0.35, 1);
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 16px;
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--ink);
+  color: var(--bone);
+  font-family: var(--font-body, system-ui, sans-serif);
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  font-family: inherit;
+}
+
+/* Marquee animation */
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+/* Reveal mask */
+@keyframes revealUp {
+  from { transform: translateY(100%); opacity: 0; }
+  to   { transform: translateY(0);    opacity: 1; }
+}
+
+.reveal {
+  overflow: hidden;
+}
+
+.reveal > * {
+  animation: revealUp 420ms var(--ease) both;
+}

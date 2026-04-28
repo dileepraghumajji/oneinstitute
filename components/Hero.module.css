@@ -1,0 +1,239 @@
+.hero {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  background: var(--ink);
+  overflow: hidden;
+}
+
+.textCol {
+  flex: 0 0 48%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 128px 64px 96px;
+  position: relative;
+  z-index: 3;
+}
+
+.ringCol {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+}
+
+/* Gradient overlay — fades ink into transparency so ring bleeds through */
+.hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to right,
+    #0a0a0a 0%,
+    #0a0a0a 28%,
+    rgba(10, 10, 10, 0.88) 44%,
+    rgba(10, 10, 10, 0.55) 58%,
+    rgba(10, 10, 10, 0.15) 75%,
+    transparent 100%
+  );
+  z-index: 2;
+  pointer-events: none;
+}
+
+.roundTag {
+  font-family: var(--font-mono), monospace;
+  font-size: 12px;
+  letter-spacing: 0.16em;
+  color: var(--blood);
+  text-transform: uppercase;
+  margin-bottom: 40px;
+}
+
+.headline {
+  font-family: var(--font-display), sans-serif;
+  font-size: clamp(3.5rem, 6.5vw, 8rem);
+  line-height: 0.88;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+  color: var(--bone);
+}
+
+.accentWord {
+  color: var(--blood);
+}
+
+.sub {
+  margin-top: 32px;
+  font-family: var(--font-mono), monospace;
+  font-size: 13px;
+  letter-spacing: 0.18em;
+  color: var(--bone-2);
+  text-transform: uppercase;
+}
+
+.ctaRow {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-top: 48px;
+  flex-wrap: wrap;
+}
+
+.btnPrimary {
+  background: var(--blood);
+  color: var(--bone);
+  font-family: var(--font-sub-display), sans-serif;
+  font-size: 13px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 16px 32px;
+  text-decoration: none;
+  display: inline-block;
+  transition: background 180ms var(--ease), transform 100ms;
+}
+
+.btnPrimary:hover {
+  background: var(--blood-deep);
+}
+
+.btnPrimary:active {
+  transform: translateY(1px);
+}
+
+.btnSecondary {
+  color: var(--bone-2);
+  font-family: var(--font-sub-display), sans-serif;
+  font-size: 13px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 16px 32px;
+  text-decoration: none;
+  display: inline-block;
+  border: 1px solid var(--ink-3);
+  transition: border-color 180ms var(--ease), color 180ms var(--ease);
+}
+
+.btnSecondary:hover {
+  border-color: var(--bone-2);
+  color: var(--bone);
+}
+
+.locationPin {
+  position: absolute;
+  bottom: 48px;
+  right: 48px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--bone-2);
+  font-family: var(--font-mono), monospace;
+  font-size: 12px;
+  letter-spacing: 0.1em;
+  text-decoration: none;
+  z-index: 2;
+  transition: color 180ms;
+}
+
+.locationPin:hover {
+  color: var(--blood);
+}
+
+.locationDot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--blood);
+  flex-shrink: 0;
+}
+
+.scrollHint {
+  position: absolute;
+  bottom: 48px;
+  left: 64px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: var(--bone-2);
+  font-family: var(--font-mono), monospace;
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  z-index: 2;
+}
+
+.scrollLine {
+  width: 40px;
+  height: 1px;
+  background: var(--ink-3);
+  position: relative;
+  overflow: hidden;
+}
+
+.scrollLine::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: var(--blood);
+  animation: scanLine 2s var(--ease) infinite;
+}
+
+@keyframes scanLine {
+  0%   { left: -100%; }
+  100% { left: 100%; }
+}
+
+@media (max-width: 900px) {
+  .hero {
+    min-height: 100vh;
+  }
+
+  .hero::before {
+    background: linear-gradient(
+      to bottom,
+      transparent 0%,
+      rgba(10, 10, 10, 0.3) 30%,
+      rgba(10, 10, 10, 0.75) 55%,
+      #0a0a0a 75%
+    );
+  }
+
+  .textCol {
+    flex: none;
+    width: 100%;
+    padding: 60vh 32px 60px;
+    align-items: flex-start;
+  }
+
+  .locationPin {
+    bottom: 24px;
+    right: 24px;
+  }
+
+  .scrollHint {
+    display: none;
+  }
+}
+
+@media (max-width: 480px) {
+  .textCol {
+    padding: 80px 24px 40px;
+  }
+
+  .ringCol {
+    height: 70vw;
+  }
+
+  .ctaRow {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .btnPrimary,
+  .btnSecondary {
+    width: 100%;
+    text-align: center;
+  }
+}
