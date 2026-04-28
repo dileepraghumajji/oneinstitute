@@ -1,6 +1,6 @@
 import { Anton, Archivo_Black, Inter, JetBrains_Mono } from 'next/font/google'
 import './globals.css'
-import SmoothScroll from '@/components/SmoothScroll'
+import ClientLayout from '@/components/ClientLayout'
 
 const anton = Anton({
   subsets: ['latin'],
@@ -46,7 +46,7 @@ export default function RootLayout({ children }) {
       className={`${anton.variable} ${archivoBlack.variable} ${inter.variable} ${jetbrainsMono.variable}`}
     >
       <body>
-        <SmoothScroll>{children}</SmoothScroll>
+        <ClientLayout>{children}</ClientLayout>
       </body>
     </html>
   )

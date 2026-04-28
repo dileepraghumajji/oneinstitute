@@ -5,6 +5,8 @@ import gsap from 'gsap'
 import { useGSAP } from '@gsap/react'
 import styles from './Nav.module.css'
 
+import { useLoading } from '@/context/LoadingContext'
+
 const navLinks = [
   { label: 'Programs', href: '#programs' },
   { label: 'Schedule', href: '#schedule' },
@@ -13,18 +15,22 @@ const navLinks = [
 ]
 
 export default function Nav() {
+  const { isLoaded } = useLoading()
   const container = useRef()
   const [scrolled, setScrolled]   = useState(false)
   const [menuOpen, setMenuOpen] = useState(false)
 
   useGSAP(() => {
+    if (!isLoaded) return
+
     gsap.from(container.current, {
       y: -100,
       opacity: 0,
       duration: 1,
       ease: 'power3.out',
+      delay: 0.5, // slight delay after hero starts
     })
-  })
+  }, { dependencies: [isLoaded] })
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 40)

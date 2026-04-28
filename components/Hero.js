@@ -7,13 +7,18 @@ import gsap from 'gsap'
 import { useGSAP } from '@gsap/react'
 import styles from './Hero.module.css'
 
+import { useLoading } from '@/context/LoadingContext'
+
 const BoxingRing3D = dynamic(() => import('./BoxingRing3D'), { ssr: false })
 
 export default function Hero() {
+  const { isLoaded } = useLoading()
   const container = useRef()
   const ringRef = useRef()
 
   useGSAP(() => {
+    if (!isLoaded) return
+
     const tl = gsap.timeline()
 
     // Text stagger animation
@@ -23,7 +28,7 @@ export default function Hero() {
       duration: 0.8,
       stagger: 0.15,
       ease: 'power3.out',
-      delay: 0.2, // slight delay on load
+      delay: 0.3, // small extra buffer for the loader exit
     })
 
     // 3D Ring fall and bounce animation
@@ -33,7 +38,7 @@ export default function Hero() {
       duration: 1.5,
       ease: 'bounce.out',
     }, '-=0.5') // overlap with text animation slightly
-  }, { scope: container })
+  }, { scope: container, dependencies: [isLoaded] })
 
   return (
     <section className={styles.hero} ref={container}>
