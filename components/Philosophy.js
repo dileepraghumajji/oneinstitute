@@ -26,6 +26,7 @@ const pillars = [
 
 export default function Philosophy() {
   const container = useRef()
+  const imgInnerRef = useRef()
 
   useGSAP(() => {
     // Column entrance animations
@@ -98,10 +99,44 @@ export default function Philosophy() {
         start: 'top 90%',
       }
     })
+
+    // 15.2 — bgLetter parallax
+    const bgLetterEl = container.current.querySelector(`.${styles.bgLetter}`)
+    if (bgLetterEl) {
+      gsap.to(bgLetterEl, {
+        y: -50,
+        ease: 'none',
+        scrollTrigger: {
+          trigger: container.current,
+          start: 'top bottom',
+          end: 'bottom top',
+          scrub: 1,
+        },
+      })
+    }
+
+    // 17.5 — Coach photo inner parallax (image slides within fixed container)
+    if (imgInnerRef.current) {
+      gsap.fromTo(imgInnerRef.current,
+        { y: -30 },
+        {
+          y: 30,
+          ease: 'none',
+          scrollTrigger: {
+            trigger: container.current,
+            start: 'top bottom',
+            end: 'bottom top',
+            scrub: 1,
+          },
+        }
+      )
+    }
   }, { scope: container })
 
   return (
     <section className={styles.section} id="coaches" ref={container}>
+      <span aria-hidden="true" className={styles.bgLetter}>ONE</span>
+      <span aria-hidden="true" className="sectionNum">[S 05]</span>
       <div className={styles.inner}>
         <div className={`${styles.left} philosophy-left-anim`}>
           <p className={styles.overline}>[+] Why Train With Us</p>
@@ -134,14 +169,16 @@ export default function Philosophy() {
 
         <div className={`${styles.right} philosophy-right-anim`}>
           <div className={styles.imgContainer}>
-            <Image
-              src="/images/coach1.png"
-              alt="ONE Institute boxing coach in fighting stance"
-              fill
-              sizes="(max-width: 900px) 100vw, 50vw"
-              className={`${styles.coachPhoto} brandImage`}
-              priority={false}
-            />
+            <div ref={imgInnerRef} className={styles.imgInner}>
+              <Image
+                src="/images/coach1.png"
+                alt="ONE Institute boxing coach in fighting stance"
+                fill
+                sizes="(max-width: 900px) 100vw, 50vw"
+                className={`${styles.coachPhoto} brandImage`}
+                priority={false}
+              />
+            </div>
             <div className={styles.cornerAccent} />
           </div>
         </div>

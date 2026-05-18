@@ -1,0 +1,27 @@
+.hero {
+  padding: 140px 60px 56px;
+  border-bottom: 1px solid var(--ink-3);
+}
+
+.overline {
+  font-family: var(--font-mono), monospace;
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  color: var(--blood);
+  text-transform: uppercase;
+  margin-bottom: 24px;
+}
+
+.headline {
+  font-family: var(--font-display), sans-serif;
+  font-size: clamp(64px, 9vw, 140px);
+  line-height: 0.88;
+  letter-spacing: -0.025em;
+  color: var(--bone);
+}
+
+@media (max-width: 768px) {
+  .hero {
+    padding: 120px 24px 48px;
+  }
+}

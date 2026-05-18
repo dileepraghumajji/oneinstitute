@@ -3,36 +3,34 @@
 import { useEffect } from 'react'
 import SmoothScroll from './SmoothScroll'
 import LoadingScreen from './LoadingScreen'
-import Cursor from './Cursor'
-import Grain from './Grain'
+import ScrollProgress from './ScrollProgress'
 import { LoadingProvider, useLoading } from '@/context/LoadingContext'
+import { SoundProvider } from '@/context/SoundContext'
+
 
 function ClientLayoutContent({ children }) {
   const { isLoaded, setLoaded } = useLoading()
 
-  // Prevent scroll when loading
   useEffect(() => {
-    if (!isLoaded) {
-      document.body.style.overflow = 'hidden'
-    } else {
-      document.body.style.overflow = 'auto'
-    }
+    document.documentElement.classList.toggle('is-loading', !isLoaded)
+    return () => document.documentElement.classList.remove('is-loading')
   }, [isLoaded])
 
   return (
     <>
       <LoadingScreen onComplete={setLoaded} />
+      <ScrollProgress />
       <SmoothScroll>{children}</SmoothScroll>
-      <Cursor />
-      {/* <Grain /> */}
     </>
   )
 }
 
 export default function ClientLayout({ children }) {
   return (
-    <LoadingProvider>
-      <ClientLayoutContent>{children}</ClientLayoutContent>
-    </LoadingProvider>
+    <SoundProvider>
+      <LoadingProvider>
+        <ClientLayoutContent>{children}</ClientLayoutContent>
+      </LoadingProvider>
+    </SoundProvider>
   )
 }

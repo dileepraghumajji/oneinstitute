@@ -389,7 +389,7 @@
 
 ---
 
-## SPRINT 12 — React Three Fiber Migration & Advanced WebGL *(Tier 2)*
+
 
 ### 12.1 Install R3F + Drei
 - [ ] `npm install @react-three/fiber @react-three/drei`

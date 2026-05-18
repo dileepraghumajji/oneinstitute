@@ -1,0 +1,15 @@
+.bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: var(--blood);
+  transform-origin: left center;
+  transform: scaleX(0);
+  z-index: 9999;
+  pointer-events: none;
+  /* Subtle glow so it pops on dark bg */
+  box-shadow: 0 0 8px var(--blood-glow), 0 0 2px var(--blood);
+  will-change: transform;
+}

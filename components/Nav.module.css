@@ -177,6 +177,7 @@
 @media (max-width: 900px) {
   .links { display: none; }
   .cta   { display: none; }
+  .muteBtn { display: none; }
   .hamburger { display: flex; }
   .nav { padding: 0 24px; }
   .navScrolled {
@@ -186,4 +187,46 @@
 
 @media (max-width: 480px) {
   .mobileMenu { padding: 24px; }
+}
+
+/* ---- 8.4 Mute toggle button ---- */
+.muteBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  background: none;
+  border: 1px solid var(--ink-3);
+  cursor: pointer;
+  color: var(--bone-2);
+  transition: color 180ms var(--ease), border-color 180ms var(--ease);
+  flex-shrink: 0;
+}
+
+.muteBtn:hover {
+  color: var(--blood);
+  border-color: var(--blood);
+}
+
+.mobileMuteBtn {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: none;
+  border: 1px solid var(--ink-3);
+  cursor: pointer;
+  color: var(--bone-2);
+  font-family: var(--font-sub-display), sans-serif;
+  font-size: 13px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 14px 20px;
+  width: 100%;
+  transition: color 180ms var(--ease), border-color 180ms var(--ease);
+}
+
+.mobileMuteBtn:hover {
+  color: var(--blood);
+  border-color: var(--blood);
 }

@@ -3,11 +3,13 @@
 import { useEffect, useState, useRef } from 'react'
 import gsap from 'gsap'
 import styles from './LoadingScreen.module.css'
+import { useSound } from '@/context/SoundContext'
 
 export default function LoadingScreen({ onComplete }) {
   const [progress, setProgress] = useState(0)
   const loaderRef = useRef()
   const contentRef = useRef()
+  const { playSound } = useSound()
 
   const statusRef = useRef()
   const readyRef = useRef()
@@ -31,6 +33,9 @@ export default function LoadingScreen({ onComplete }) {
 
   useEffect(() => {
     if (progress === 100) {
+      // 8.3 — Play bell sound just before slide-out
+      playSound('bell')
+
       const tl = gsap.timeline({
         onComplete: () => {
           if (onComplete) onComplete()

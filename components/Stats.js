@@ -18,17 +18,17 @@ export default function Stats() {
   const counterRef = useRef(null)
 
   useGSAP(() => {
-    gsap.from('.stat-item-anim', {
-      y: 50,
-      opacity: 0,
-      duration: 1,
-      stagger: 0.15,
-      ease: 'power2.out',
-      scrollTrigger: {
-        trigger: container.current,
-        start: 'top 85%',
-      }
-    })
+    // 17.4 — Stats fly in from four directions
+    const statEls = Array.from(container.current.querySelectorAll('.stat-item-anim'))
+    if (statEls.length >= 4) {
+      const tl = gsap.timeline({
+        scrollTrigger: { trigger: container.current, start: 'top 85%' }
+      })
+      tl.from(statEls[0], { x: -80, opacity: 0, duration: 1, ease: 'power2.out' }, 0)
+      tl.from(statEls[1], { y: -80, opacity: 0, duration: 1, ease: 'power2.out' }, 0.1)
+      tl.from(statEls[2], { y: 80,  opacity: 0, duration: 1, ease: 'power2.out' }, 0.1)
+      tl.from(statEls[3], { x: 80,  opacity: 0, duration: 1, ease: 'power2.out' }, 0.2)
+    }
 
     ScrollTrigger.create({
       trigger: container.current,
@@ -51,10 +51,42 @@ export default function Stats() {
         })
       },
     })
+
+    // 15.1 — Variable font weight animation on stat values
+    ScrollTrigger.create({
+      trigger: container.current,
+      start: 'top 85%',
+      once: true,
+      onEnter: () => {
+        gsap.to(container.current.querySelectorAll(`.${styles.value}`), {
+          fontVariationSettings: "'wght' 900",
+          duration: 0.8,
+          stagger: 0.1,
+          ease: 'power2.out',
+        })
+      },
+    })
+
+    // 15.2 — bgLetter parallax
+    const bgLetterEl = container.current.querySelector(`.${styles.bgLetter}`)
+    if (bgLetterEl) {
+      gsap.to(bgLetterEl, {
+        y: -40,
+        ease: 'none',
+        scrollTrigger: {
+          trigger: container.current,
+          start: 'top bottom',
+          end: 'bottom top',
+          scrub: 1,
+        },
+      })
+    }
   }, { scope: container })
 
   return (
     <section className={styles.section} ref={container}>
+      <span aria-hidden="true" className={styles.bgLetter}>12</span>
+      <span aria-hidden="true" className="sectionNum">[S 04]</span>
       <div className={styles.inner}>
         <div className={styles.grid}>
           {stats.map(s => (

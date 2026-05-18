@@ -1,0 +1,277 @@
+.hero {
+  min-height: 80vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 140px 60px 80px;
+  position: relative;
+  overflow: hidden;
+  border-bottom: 1px solid var(--ink-3);
+}
+
+.heroBg {
+  position: absolute;
+  inset: 0;
+  font-family: var(--font-display), sans-serif;
+  font-size: clamp(300px, 40vw, 600px);
+  line-height: 1;
+  letter-spacing: -0.06em;
+  color: var(--bone);
+  opacity: 0.03;
+  display: flex;
+  align-items: center;
+  padding-left: 40px;
+  pointer-events: none;
+  user-select: none;
+  white-space: nowrap;
+}
+
+.breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-mono), monospace;
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  color: var(--bone-2);
+  opacity: 0.6;
+  margin-bottom: 40px;
+}
+
+.breadcrumb a {
+  transition: color 200ms;
+}
+
+.breadcrumb a:hover {
+  color: var(--blood);
+}
+
+.overline {
+  font-family: var(--font-mono), monospace;
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  color: var(--blood);
+  text-transform: uppercase;
+  margin-bottom: 20px;
+}
+
+.headline {
+  font-family: var(--font-display), sans-serif;
+  font-size: clamp(80px, 13vw, 200px);
+  line-height: 0.88;
+  letter-spacing: -0.03em;
+  color: var(--bone);
+  margin-bottom: 40px;
+}
+
+.heroMeta {
+  display: flex;
+  align-items: center;
+  gap: 40px;
+  font-family: var(--font-mono), monospace;
+  font-size: 12px;
+  letter-spacing: 0.1em;
+  color: var(--bone-2);
+}
+
+.heroMetaDot {
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: var(--blood);
+  display: inline-block;
+}
+
+/* ── Pillars / What You'll Learn ── */
+.pillars {
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  gap: 0 80px;
+  padding: 80px 60px;
+  border-bottom: 1px solid var(--ink-3);
+}
+
+.pillarsLabel {
+  font-family: var(--font-mono), monospace;
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  color: var(--bone-2);
+  opacity: 0.6;
+  padding-top: 4px;
+}
+
+.pillarsGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 40px;
+}
+
+.pillar {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.pillarNum {
+  font-family: var(--font-mono), monospace;
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  color: var(--blood);
+}
+
+.pillarTitle {
+  font-family: var(--font-sub-display), sans-serif;
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  color: var(--bone);
+  line-height: 1.2;
+}
+
+.pillarDesc {
+  font-size: 14px;
+  color: var(--bone-2);
+  line-height: 1.65;
+}
+
+/* ── Schedule strip ── */
+.scheduleSection {
+  padding: 80px 60px;
+  border-bottom: 1px solid var(--ink-3);
+}
+
+.scheduleLabel {
+  font-family: var(--font-mono), monospace;
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  color: var(--bone-2);
+  opacity: 0.6;
+  margin-bottom: 40px;
+}
+
+.scheduleTitle {
+  font-family: var(--font-display), sans-serif;
+  font-size: clamp(40px, 5vw, 72px);
+  line-height: 0.95;
+  letter-spacing: -0.02em;
+  color: var(--bone);
+  margin-bottom: 48px;
+}
+
+.slots {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.slot {
+  display: grid;
+  grid-template-columns: 120px 1fr 140px;
+  align-items: center;
+  gap: 32px;
+  padding: 24px 0;
+  border-top: 1px solid var(--ink-3);
+}
+
+.slot:last-child {
+  border-bottom: 1px solid var(--ink-3);
+}
+
+.slotDay {
+  font-family: var(--font-mono), monospace;
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  color: var(--bone-2);
+  text-transform: uppercase;
+}
+
+.slotTime {
+  font-family: var(--font-sub-display), sans-serif;
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--bone);
+}
+
+.slotLevel {
+  font-family: var(--font-mono), monospace;
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  color: var(--bone-2);
+  border: 1px solid var(--ink-3);
+  padding: 4px 10px;
+  text-transform: uppercase;
+  text-align: center;
+}
+
+/* ── CTA strip ── */
+.cta {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  gap: 40px;
+  padding: 80px 60px;
+}
+
+.ctaText {
+  font-family: var(--font-display), sans-serif;
+  font-size: clamp(36px, 4.5vw, 64px);
+  line-height: 1;
+  letter-spacing: -0.02em;
+  color: var(--bone);
+}
+
+.ctaBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--blood);
+  color: var(--bone);
+  font-family: var(--font-sub-display), sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 18px 36px;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: background 200ms var(--ease);
+}
+
+.ctaBtn:hover {
+  background: var(--blood-deep);
+}
+
+@media (max-width: 900px) {
+  .hero {
+    padding: 120px 28px 64px;
+  }
+
+  .pillars {
+    grid-template-columns: 1fr;
+    gap: 32px;
+    padding: 56px 28px;
+  }
+
+  .pillarsGrid {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+
+  .scheduleSection {
+    padding: 56px 28px;
+  }
+
+  .slot {
+    grid-template-columns: 100px 1fr;
+    grid-template-rows: auto auto;
+  }
+
+  .slotLevel {
+    grid-column: 2;
+  }
+
+  .cta {
+    grid-template-columns: 1fr;
+    padding: 56px 28px;
+  }
+}

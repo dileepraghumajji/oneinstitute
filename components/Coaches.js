@@ -64,6 +64,7 @@ export default function Coaches() {
 
   return (
     <section className={styles.section} id="coaches-section" ref={container}>
+      <span aria-hidden="true" className="sectionNum">[S 06]</span>
       <div className={styles.inner}>
         <div className={styles.header}>
           <p className={`${styles.overline} coaches-header-anim`}>[+] The Corner</p>

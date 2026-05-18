@@ -1,0 +1,40 @@
+.hero {
+  min-height: 52vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 140px 60px 72px;
+  position: relative;
+  border-bottom: 1px solid var(--ink-3);
+}
+
+.overline {
+  font-family: var(--font-mono), monospace;
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  color: var(--blood);
+  text-transform: uppercase;
+  margin-bottom: 24px;
+}
+
+.headline {
+  font-family: var(--font-display), sans-serif;
+  font-size: clamp(64px, 10vw, 160px);
+  line-height: 0.88;
+  letter-spacing: -0.025em;
+  color: var(--bone);
+  margin-bottom: 36px;
+}
+
+.sub {
+  font-size: 16px;
+  color: var(--bone-2);
+  line-height: 1.6;
+  max-width: 480px;
+}
+
+@media (max-width: 768px) {
+  .hero {
+    padding: 120px 28px 56px;
+  }
+}

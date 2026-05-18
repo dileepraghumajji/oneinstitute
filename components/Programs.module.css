@@ -1,6 +1,7 @@
 .section {
   background: var(--ink);
   padding: 96px 0;
+  position: relative;
 }
 
 .inner {
@@ -72,6 +73,20 @@
   transition: border-color 180ms var(--ease);
   border: 1px solid transparent;
   position: relative;
+  overflow: hidden;
+}
+
+.video {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 40%;
+  object-fit: cover;
+  opacity: 0;
+  mix-blend-mode: luminosity;
+  transition: opacity 300ms var(--ease);
+  pointer-events: none;
 }
 
 .card:hover {
@@ -93,12 +108,23 @@
 }
 
 .cardName {
-  font-family: var(--font-display), sans-serif;
+  font-family: var(--font-sub-display), sans-serif;
   font-size: 2.25rem;
   line-height: 0.9;
   letter-spacing: -0.01em;
   text-transform: uppercase;
   color: var(--bone);
+  font-weight: 400;
+}
+
+@supports (font-variation-settings: 'wght' 900) {
+  .cardName {
+    transition: font-variation-settings 600ms var(--ease), font-weight 600ms var(--ease);
+  }
+  .card:hover .cardName {
+    font-weight: 900;
+    font-variation-settings: 'wght' 900;
+  }
 }
 
 .divider {
@@ -156,52 +182,44 @@
   transform: translateX(4px);
 }
 
-/* ── Desktop pin layout ── */
-@media (min-width: 769px) {
-  .section {
-    height: 100vh;
-    padding: 0;
-    overflow: hidden;
-    display: flex;
-    align-items: center;
-  }
-
-  .inner {
-    display: flex;
-    align-items: center;
-    gap: 64px;
-    height: 100%;
-  }
-
-  .header {
-    flex-direction: column;
-    align-items: flex-start;
-    justify-content: center;
-    flex-shrink: 0;
-    width: 280px;
-    margin-bottom: 0;
-  }
-
-  .headerRight {
-    margin-top: 24px;
-  }
-
-  .grid {
-    display: flex;
-    flex-wrap: nowrap;
-    flex: 1;
-    background: var(--ink-3);
-    gap: 1px;
-    min-height: 540px;
-    align-items: stretch;
-    overflow: hidden;
-  }
-
-  .card {
-    flex: 1;
-    min-width: 0;
-  }
+/* ── 17.2 Parallax depth lines (mid-layer) ── */
+.parallaxLines {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  will-change: transform;
 }
+
+.parallaxLine {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: var(--ink-3);
+}
+
+.parallaxLine:first-child { top: 28%; }
+.parallaxLine:last-child  { top: 72%; }
+
+/* ── 15.2 Background letterform ── */
+.bgLetter {
+  position: absolute;
+  right: -2vw;
+  top: 40%;
+  font-family: var(--font-display), sans-serif;
+  font-size: clamp(400px, 50vw, 800px);
+  color: var(--bone);
+  opacity: 0.025;
+  line-height: 1;
+  letter-spacing: -0.06em;
+  user-select: none;
+  pointer-events: none;
+  z-index: 0;
+  white-space: nowrap;
+  will-change: transform;
+}
+
 
 @media (max-width: 1100px) {
   .inner {

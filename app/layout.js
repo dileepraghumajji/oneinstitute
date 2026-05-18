@@ -1,4 +1,5 @@
-import { Anton, Archivo_Black, Inter, JetBrains_Mono } from 'next/font/google'
+import { Anton, Plus_Jakarta_Sans, Inter, JetBrains_Mono } from 'next/font/google'
+import { ViewTransitions } from 'next-view-transitions'
 import './globals.css'
 import ClientLayout from '@/components/ClientLayout'
 
@@ -9,9 +10,9 @@ const anton = Anton({
   display: 'swap',
 })
 
-const archivoBlack = Archivo_Black({
+const plusJakartaSans = Plus_Jakarta_Sans({
   subsets: ['latin'],
-  weight: '400',
+  weight: ['400', '500', '600', '700', '800'],
   variable: '--font-sub-display',
   display: 'swap',
 })
@@ -75,13 +76,27 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html
-      lang="en"
-      className={`${anton.variable} ${archivoBlack.variable} ${inter.variable} ${jetbrainsMono.variable}`}
-    >
-      <body>
-        <ClientLayout>{children}</ClientLayout>
-      </body>
-    </html>
+    <ViewTransitions>
+      <html
+        lang="en"
+        className={`${anton.variable} ${plusJakartaSans.variable} ${inter.variable} ${jetbrainsMono.variable}`}
+      >
+        <body>
+          <svg aria-hidden="true" focusable="false" style={{ position: 'absolute', width: 0, height: 0, overflow: 'hidden' }}>
+            <defs>
+              <filter id="duotone" colorInterpolationFilters="sRGB">
+                <feColorMatrix type="saturate" values="0" />
+                <feComponentTransfer>
+                  <feFuncR type="table" tableValues="0 1" />
+                  <feFuncG type="table" tableValues="0 0.33" />
+                  <feFuncB type="table" tableValues="0 0" />
+                </feComponentTransfer>
+              </filter>
+            </defs>
+          </svg>
+          <ClientLayout>{children}</ClientLayout>
+        </body>
+      </html>
+    </ViewTransitions>
   )
 }

@@ -1,23 +1,44 @@
+'use client'
+
+import { useRef } from 'react'
+import { Link } from 'next-view-transitions'
+import gsap from 'gsap'
+import { useGSAP } from '@gsap/react'
 import { Instagram, Phone, MapPin } from 'lucide-react'
 import styles from './Footer.module.css'
 
 const disciplines = ['Boxing', 'Muaythai', 'Kickboxing K1', 'Low Kick', 'Sparring']
 const quickLinks  = [
-  { label: 'Programs',  href: '#programs' },
-  { label: 'Schedule',  href: '#schedule' },
-  { label: 'Coaches',   href: '#coaches'  },
-  { label: 'Contact',   href: '#contact'  },
+  { label: 'Programs',  href: '/programs' },
+  { label: 'Schedule',  href: '/schedule' },
+  { label: 'Coaches',   href: '/coaches'  },
+  { label: 'Contact',   href: '/contact'  },
 ]
 
 export default function Footer() {
   const year = new Date().getFullYear()
+  const footerRef = useRef()
+
+  useGSAP(() => {
+    gsap.from('.footer-col', {
+      y: 60,
+      opacity: 0,
+      duration: 0.9,
+      stagger: 0.1,
+      ease: 'power3.out',
+      scrollTrigger: {
+        trigger: footerRef.current,
+        start: 'top 90%',
+      },
+    })
+  }, { scope: footerRef })
 
   return (
-    <footer className={styles.footer}>
+    <footer className={styles.footer} ref={footerRef}>
       <div className={styles.inner}>
         <div className={styles.top}>
           {/* Brand column */}
-          <div className={styles.brand}>
+          <div className={`${styles.brand} footer-col`}>
             <a href="#" className={styles.logo}>
               <span className={styles.logoMark}>1</span>
               ONE INSTITUTE
@@ -39,31 +60,31 @@ export default function Footer() {
           </div>
 
           {/* Disciplines */}
-          <div>
+          <div className="footer-col">
             <p className={styles.colTitle}>Disciplines</p>
             <ul className={styles.links}>
               {disciplines.map(d => (
                 <li key={d}>
-                  <a href="#programs">{d}</a>
+                  <Link href="/programs">{d}</Link>
                 </li>
               ))}
             </ul>
           </div>
 
           {/* Quick links */}
-          <div>
+          <div className="footer-col">
             <p className={styles.colTitle}>Navigate</p>
             <ul className={styles.links}>
               {quickLinks.map(l => (
                 <li key={l.label}>
-                  <a href={l.href}>{l.label}</a>
+                  <Link href={l.href}>{l.label}</Link>
                 </li>
               ))}
             </ul>
           </div>
 
           {/* Contact */}
-          <div>
+          <div className="footer-col">
             <p className={styles.colTitle}>Contact</p>
             <a href="tel:07411074751" className={styles.contactItem} aria-label="Call ONE Institute">
               <Phone size={14} strokeWidth={1.75} />

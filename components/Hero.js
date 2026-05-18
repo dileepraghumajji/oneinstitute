@@ -1,19 +1,22 @@
 'use client'
 
-import { useRef, useState, useEffect, useCallback } from 'react'
+import { useRef, useState, useEffect } from 'react'
 import dynamic from 'next/dynamic'
+import { Link } from 'next-view-transitions'
 import { MapPin } from 'lucide-react'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { useGSAP } from '@gsap/react'
+import SplitType from 'split-type'
 import styles from './Hero.module.css'
 import { useLoading } from '@/context/LoadingContext'
+import { useSound } from '@/context/SoundContext'
 
 if (typeof window !== 'undefined') {
   gsap.registerPlugin(ScrollTrigger)
 }
 
-const BoxingRing3D = dynamic(() => import('./BoxingRing3D'), {
+const BoxingRing3D = dynamic(() => import('./BoxingRing3DF'), {
   ssr: false,
   loading: () => null,
 })
@@ -41,9 +44,12 @@ function resetMagnet(e) {
 
 export default function Hero() {
   const { isLoaded } = useLoading()
+  const { playSound } = useSound()
   const container = useRef()
   const ringRef = useRef()
   const speedRef = useRef()
+  const lastGlowRef = useRef(1)
+  const lastOpacityRef = useRef('1')
   const [punchSpeed, setPunchSpeed] = useState(null)
   const lastPunchTime = useRef(0)
   const inactivityTimer = useRef(null)
@@ -58,6 +64,9 @@ export default function Hero() {
       if (delta > 0 && delta < 2000) {
         const speed = Math.min(Math.round(1000 / delta * 30), 120)
         setPunchSpeed(speed)
+
+        // 8.3 — Play punch sound on each registered click
+        playSound('punch')
 
         // Animate the number with GSAP
         if (speedRef.current) {
@@ -90,6 +99,9 @@ export default function Hero() {
   useGSAP(() => {
     if (!isLoaded) return
 
+    const headlineEl = container.current.querySelector('.hero-headline')
+    const split = new SplitType(headlineEl, { types: 'chars' })
+
     const tl = gsap.timeline()
 
     // Ring crashes down
@@ -111,7 +123,18 @@ export default function Hero() {
     tl.set(ringRef.current, { x: 0 })
     tl.call(() => window.dispatchEvent(new CustomEvent('ring-impact')), null, '<')
 
-    // Text reveals
+    // Headline — letter-by-letter burst reveal
+    tl.from(split.chars, {
+      y: 80,
+      opacity: 0,
+      rotation: -8,
+      skewX: 12,
+      duration: 0.7,
+      stagger: 0.04,
+      ease: 'power4.out',
+    }, '-=0.4')
+
+    // Supporting text fade-in
     tl.from('.hero-text-anim', {
       y: 40,
       opacity: 0,
@@ -120,24 +143,57 @@ export default function Hero() {
       ease: 'power3.out',
     }, '-=0.5')
 
-    // 5.4 — Scroll-linked glow intensity
+    // 17.1 — Ring recedes as hero scrolls out
+    gsap.to(ringRef.current, {
+      scale: 0.7,
+      y: -80,
+      opacity: 0,
+      ease: 'none',
+      scrollTrigger: {
+        trigger: container.current,
+        start: 'top top',
+        end: 'bottom top',
+        scrub: 1,
+      }
+    })
+
+    // 5.4 + 17.1 — Scroll-linked glow intensity + overlay fade
     ScrollTrigger.create({
       trigger: container.current,
       start: 'top top',
       end: 'bottom top',
       scrub: true,
       onUpdate: (self) => {
-        const intensity = 1 - self.progress * 0.8 // range: 1.0 → 0.2
-        window.dispatchEvent(new CustomEvent('ring-glow', {
-          detail: { intensity }
-        }))
+        // Quantise to 5% steps — reduces CustomEvent allocations from 60/s to ~4/s
+        const intensity = Math.round((1 - self.progress * 0.8) * 20) / 20
+        if (intensity !== lastGlowRef.current) {
+          lastGlowRef.current = intensity
+          window.dispatchEvent(new CustomEvent('ring-glow', { detail: { intensity } }))
+        }
+        // Two-decimal opacity string — avoids cascade recalc on imperceptible changes
+        const opacity = (1 - self.progress).toFixed(2)
+        if (opacity !== lastOpacityRef.current) {
+          lastOpacityRef.current = opacity
+          container.current.style.setProperty('--hero-before-opacity', opacity)
+        }
       },
     })
+
+    // 8.3 — Play whoosh once when hero scrolls out of viewport
+    ScrollTrigger.create({
+      trigger: container.current,
+      start: 'bottom top',
+      once: true,
+      onEnter: () => playSound('whoosh'),
+    })
+
+    return () => split.revert()
 
   }, { scope: container, dependencies: [isLoaded] })
 
   return (
     <section className={styles.hero} ref={container}>
+      <span aria-hidden="true" className="sectionNum">[S 01]</span>
 
       {/* Full-bleed 3D ring — base environment layer */}
       <div className={styles.ringCol} ref={ringRef} data-cursor-crosshair>
@@ -152,24 +208,24 @@ export default function Hero() {
       {/* Bottom-left — headline stack */}
       <div className={styles.bottomContent}>
         <p className={`${styles.sub} hero-text-anim`}>Boxing · Muaythai · Kickboxing</p>
-        <h1 className={`${styles.headline} hero-text-anim`}>
+        <h1 className={`${styles.headline} hero-headline`}>
           STEP IN.<br />
           ROUND <span className={styles.accentWord}>ONE</span><br />
           STARTS HERE.
         </h1>
         <div className={`${styles.ctaRow} hero-text-anim`}>
-          <a
-            href="#contact"
+          <Link
+            href="/contact"
             className={styles.btnPrimary}
             onMouseMove={handleMagnet}
             onMouseLeave={resetMagnet}
-          >Book a Class</a>
-          <a
-            href="#programs"
+          >Book a Class</Link>
+          <Link
+            href="/programs"
             className={styles.btnSecondary}
             onMouseMove={handleMagnet}
             onMouseLeave={resetMagnet}
-          >View Programs</a>
+          >View Programs</Link>
         </div>
       </div>
 

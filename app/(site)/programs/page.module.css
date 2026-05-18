@@ -1,0 +1,154 @@
+.hero {
+  min-height: 56vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 140px 60px 72px;
+  position: relative;
+  border-bottom: 1px solid var(--ink-3);
+}
+
+.overline {
+  font-family: var(--font-mono), monospace;
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  color: var(--blood);
+  text-transform: uppercase;
+  margin-bottom: 28px;
+}
+
+.headline {
+  font-family: var(--font-display), sans-serif;
+  font-size: clamp(64px, 9vw, 150px);
+  line-height: 0.88;
+  letter-spacing: -0.025em;
+  color: var(--bone);
+}
+
+/* ── Card list ── */
+.cards {
+  display: flex;
+  flex-direction: column;
+}
+
+.card {
+  display: grid;
+  grid-template-columns: 64px 1fr 200px 48px;
+  align-items: center;
+  gap: 40px;
+  padding: 52px 60px;
+  border-bottom: 1px solid var(--ink-3);
+  position: relative;
+  overflow: hidden;
+  text-decoration: none;
+  color: var(--bone);
+  transition: background 300ms var(--ease);
+}
+
+.cardVideo {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  mix-blend-mode: luminosity;
+  pointer-events: none;
+  transition: opacity 500ms var(--ease);
+}
+
+.cardNum {
+  font-family: var(--font-mono), monospace;
+  font-size: 11px;
+  color: var(--bone-2);
+  letter-spacing: 0.1em;
+  opacity: 0.6;
+}
+
+.cardName {
+  font-family: var(--font-display), sans-serif;
+  font-size: clamp(44px, 5.5vw, 88px);
+  line-height: 1;
+  letter-spacing: -0.02em;
+  transition: color 200ms var(--ease);
+}
+
+.cardMeta {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.cardSchedule {
+  font-family: var(--font-mono), monospace;
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  color: var(--bone-2);
+}
+
+.cardDays {
+  font-family: var(--font-mono), monospace;
+  font-size: 11px;
+  color: var(--bone-2);
+  opacity: 0.5;
+}
+
+.cardArrow {
+  font-size: 28px;
+  color: var(--blood);
+  opacity: 0;
+  transform: translateX(-16px);
+  transition: opacity 250ms var(--ease), transform 250ms var(--ease);
+  text-align: right;
+}
+
+/* hover states */
+.card:hover {
+  background: var(--ink-2);
+}
+
+.card:hover .cardVideo {
+  opacity: 0.14;
+}
+
+.card:hover .cardName {
+  color: var(--blood);
+}
+
+.card:hover .cardArrow {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+@media (max-width: 900px) {
+  .hero {
+    padding: 120px 28px 56px;
+  }
+
+  .card {
+    grid-template-columns: 40px 1fr;
+    grid-template-rows: auto auto;
+    gap: 8px 20px;
+    padding: 36px 28px;
+  }
+
+  .cardMeta {
+    grid-column: 2;
+  }
+
+  .cardArrow {
+    display: none;
+  }
+}
+
+@media (max-width: 560px) {
+  .card {
+    grid-template-columns: 1fr;
+    gap: 6px;
+    padding: 28px 24px;
+  }
+
+  .cardNum {
+    display: none;
+  }
+}

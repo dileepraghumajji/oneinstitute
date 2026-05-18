@@ -2,6 +2,7 @@
   background: var(--ink-2);
   padding: 128px 0;
   border-top: 1px solid var(--ink-3);
+  position: relative;
 }
 
 .inner {
@@ -58,11 +59,12 @@
 .coachImage {
   object-fit: cover;
   object-position: center top;
-  transition: filter 500ms var(--ease), transform 500ms var(--ease);
+  filter: url(#duotone);
+  transition: filter 400ms var(--ease), transform 500ms var(--ease);
 }
 
 .card:hover .coachImage {
-  filter: sepia(0.08) saturate(1.1) brightness(0.85) contrast(1.05) hue-rotate(0deg) !important;
+  filter: none;
   transform: scale(1.03);
 }
 

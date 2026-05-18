@@ -73,6 +73,7 @@ export default function Schedule() {
 
   return (
     <section className={styles.section} id="schedule" ref={container}>
+      <span aria-hidden="true" className="sectionNum">[S 03]</span>
       <div className={styles.inner}>
         <div className={styles.header}>
           <p className={`${styles.overline} schedule-header-anim`}>[+] Training Schedule</p>

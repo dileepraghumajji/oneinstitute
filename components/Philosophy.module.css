@@ -121,6 +121,15 @@
   pointer-events: none;
 }
 
+.imgInner {
+  position: absolute;
+  top: -12%;
+  bottom: -12%;
+  left: 0;
+  right: 0;
+  will-change: transform;
+}
+
 .coachPhoto {
   object-fit: cover;
   object-position: center top;
@@ -135,6 +144,24 @@
   border-top: 1px solid var(--blood);
   border-left: 1px solid var(--blood);
   z-index: 3;
+}
+
+/* ── 15.2 Background letterform ── */
+.bgLetter {
+  position: absolute;
+  left: -5%;
+  top: 25%;
+  font-family: var(--font-display), sans-serif;
+  font-size: clamp(300px, 40vw, 700px);
+  color: var(--bone);
+  opacity: 0.02;
+  line-height: 1;
+  letter-spacing: -0.06em;
+  user-select: none;
+  pointer-events: none;
+  z-index: 0;
+  white-space: nowrap;
+  will-change: transform;
 }
 
 @media (max-width: 1100px) {
