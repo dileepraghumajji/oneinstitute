@@ -46,6 +46,7 @@ export default function Hero() {
   const { isLoaded } = useLoading()
   const { playSound } = useSound()
   const container = useRef()
+  const overlayRef = useRef()
   const ringRef = useRef()
   const speedRef = useRef()
   const lastGlowRef = useRef(1)
@@ -170,11 +171,11 @@ export default function Hero() {
           lastGlowRef.current = intensity
           window.dispatchEvent(new CustomEvent('ring-glow', { detail: { intensity } }))
         }
-        // Two-decimal opacity string — avoids cascade recalc on imperceptible changes
+        // Two-decimal opacity string — avoids imperceptible per-frame updates
         const opacity = (1 - self.progress).toFixed(2)
         if (opacity !== lastOpacityRef.current) {
           lastOpacityRef.current = opacity
-          container.current.style.setProperty('--hero-before-opacity', opacity)
+          if (overlayRef.current) overlayRef.current.style.opacity = opacity
         }
       },
     })
@@ -194,6 +195,9 @@ export default function Hero() {
   return (
     <section className={styles.hero} ref={container}>
       <span aria-hidden="true" className="sectionNum">[S 01]</span>
+
+      {/* Overlay gradient — animated directly via ref, no style recalc */}
+      <div className={styles.heroOverlay} ref={overlayRef} aria-hidden="true" />
 
       {/* Full-bleed 3D ring — base environment layer */}
       <div className={styles.ringCol} ref={ringRef} data-cursor-crosshair>
@@ -226,6 +230,10 @@ export default function Hero() {
             onMouseMove={handleMagnet}
             onMouseLeave={resetMagnet}
           >View Programs</Link>
+        </div>
+        <div className={`${styles.reviewBadge} hero-text-anim`}>
+          <span className={styles.stars} aria-label="4.9 stars">★★★★★</span>
+          <span className={styles.reviewText}>4.9 · 80+ Google Reviews</span>
         </div>
       </div>
 

@@ -1,4 +1,6 @@
-:root {
+/* ── Dark mode (default) ─────────────────────────────────── */
+:root,
+[data-theme="dark"] {
   --ink:        #0A0A0A;
   --ink-2:      #161616;
   --ink-3:      #222222;
@@ -9,6 +11,56 @@
   --blood-glow: #FF8A4D;
   --canvas:     #EDE6D8;
   --ease:       cubic-bezier(0.65, 0, 0.35, 1);
+
+  /* Overlay variables for gradients — can't use rgba(var(--hex)) directly */
+  --overlay-90:       rgba(10, 10, 10, 0.90);
+  --overlay-65:       rgba(10, 10, 10, 0.65);
+  --overlay-40:       rgba(10, 10, 10, 0.40);
+  --overlay-18:       rgba(10, 10, 10, 0.18);
+  --overlay-08:       rgba(10, 10, 10, 0.08);
+  --nav-scrolled-bg:  rgba(10, 10, 10, 0.72);
+
+  /* Stats section — always a light canvas background in both modes */
+  --stats-value:  #0A0A0A;
+  --stats-label:  #777060;
+  --stats-border: rgba(0, 0, 0, 0.10);
+
+  /* 3D fog color (read by BoxingRing3DF) */
+  --fog-color: #0a0a0a;
+}
+
+/* ── Light mode overrides ─────────────────────────────────── */
+[data-theme="light"] {
+  --ink:        #F0EAE0;
+  --ink-2:      #E6DFD4;
+  --ink-3:      #C8C0B4;
+  --bone:       #1A1614;
+  --bone-2:     #5C574F;
+  --canvas:     #FAF6F0;
+
+  --overlay-90:       rgba(240, 234, 224, 0.90);
+  --overlay-65:       rgba(240, 234, 224, 0.65);
+  --overlay-40:       rgba(240, 234, 224, 0.40);
+  --overlay-18:       rgba(240, 234, 224, 0.18);
+  --overlay-08:       rgba(240, 234, 224, 0.08);
+  --nav-scrolled-bg:  rgba(240, 234, 224, 0.88);
+
+  --stats-value:  #1A1614;
+  --stats-label:  #4A4540;
+  --stats-border: rgba(0, 0, 0, 0.08);
+
+  --fog-color: #F0EAE0;
+}
+
+/* ── Smooth transition only during theme switch ───────────── */
+html[data-transitioning],
+html[data-transitioning] *,
+html[data-transitioning] *::before,
+html[data-transitioning] *::after {
+  transition:
+    background-color 250ms ease,
+    color            250ms ease,
+    border-color     250ms ease !important;
 }
 
 *, *::before, *::after {

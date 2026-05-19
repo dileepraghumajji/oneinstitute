@@ -6,6 +6,7 @@ import LoadingScreen from './LoadingScreen'
 import ScrollProgress from './ScrollProgress'
 import { LoadingProvider, useLoading } from '@/context/LoadingContext'
 import { SoundProvider } from '@/context/SoundContext'
+import { ThemeProvider } from '@/context/ThemeContext'
 
 
 function ClientLayoutContent({ children }) {
@@ -27,10 +28,12 @@ function ClientLayoutContent({ children }) {
 
 export default function ClientLayout({ children }) {
   return (
-    <SoundProvider>
-      <LoadingProvider>
-        <ClientLayoutContent>{children}</ClientLayoutContent>
-      </LoadingProvider>
-    </SoundProvider>
+    <ThemeProvider>
+      <SoundProvider>
+        <LoadingProvider>
+          <ClientLayoutContent>{children}</ClientLayoutContent>
+        </LoadingProvider>
+      </SoundProvider>
+    </ThemeProvider>
   )
 }

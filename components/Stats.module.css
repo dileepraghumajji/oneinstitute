@@ -14,13 +14,13 @@
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 0;
-  border-left: 1px solid rgba(0, 0, 0, 0.1);
+  border-left: 1px solid var(--stats-border);
 }
 
 .stat {
   padding: 48px 40px;
-  border-right: 1px solid rgba(0, 0, 0, 0.1);
-  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  border-right: 1px solid var(--stats-border);
+  border-bottom: 1px solid var(--stats-border);
 }
 
 .value {
@@ -28,7 +28,7 @@
   font-size: clamp(3.5rem, 5vw, 6rem);
   line-height: 0.88;
   letter-spacing: -0.02em;
-  color: var(--ink);
+  color: var(--stats-value);
   display: block;
   margin-bottom: 16px;
   transition: color 400ms var(--ease);
@@ -44,7 +44,7 @@
   font-size: 11px;
   letter-spacing: 0.2em;
   text-transform: uppercase;
-  color: #777060;
+  color: var(--stats-label);
 }
 
 .tag {

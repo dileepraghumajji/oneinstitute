@@ -46,6 +46,10 @@
   cursor: pointer;
 }
 
+.cellGrayscale {
+  filter: brightness(1) grayscale(1) contrast(1.1);
+}
+
 /* Varied placeholder tones for visual rhythm before real photos */
 .cell:nth-child(1) { background: #111111; }
 .cell:nth-child(2) { background: #181818; }

@@ -83,46 +83,49 @@ export default function ScheduleContent() {
           </Link>
         </div>
 
-        <table className={styles.table}>
-          <thead className={styles.thead}>
-            <tr>
-              <th>Day</th>
-              {timeSlots.map(t => <th key={t}>{t}</th>)}
-            </tr>
-          </thead>
-          <tbody>
-            {filtered.map(row => {
-              const isToday = row.dayIndex === today
-              return (
-                <tr
-                  key={row.day}
-                  className={`${styles.row} ${isToday ? styles.rowToday : ''}`}
-                >
-                  <td className={styles.dayCell}>
-                    {row.day}
-                    {isToday && <span className={styles.todayBadge}>Today</span>}
-                  </td>
-                  {timeSlots.map(t => {
-                    const cls = row[t]
-                    const hidden = activeFilter !== 'All' && cls?.discipline !== activeFilter
-                    return (
-                      <td key={t} className={styles.classCell}>
-                        {cls && !hidden ? (
-                          <div className={styles.chip} data-discipline={cls.discipline}>
-                            <span className={styles.chipName}>{cls.discipline}</span>
-                            <span className={styles.chipLevel}>{cls.level}</span>
-                          </div>
-                        ) : (
-                          <span className={styles.empty}>—</span>
-                        )}
-                      </td>
-                    )
-                  })}
-                </tr>
-              )
-            })}
-          </tbody>
-        </table>
+        <div className={styles.tableScroll}>
+          <table className={styles.table}>
+            <thead className={styles.thead}>
+              <tr>
+                <th>Day</th>
+                {timeSlots.map(t => <th key={t}>{t}</th>)}
+              </tr>
+            </thead>
+            <tbody>
+              {filtered.map(row => {
+                const isToday = row.dayIndex === today
+                return (
+                  <tr
+                    key={row.day}
+                    className={`${styles.row} ${isToday ? styles.rowToday : ''}`}
+                  >
+                    <td className={styles.dayCell}>
+                      {row.day}
+                      {isToday && <span className={styles.todayBadge}>Today</span>}
+                    </td>
+                    {timeSlots.map(t => {
+                      const cls = row[t]
+                      const hidden = activeFilter !== 'All' && cls?.discipline !== activeFilter
+                      return (
+                        <td key={t} className={styles.classCell}>
+                          {cls && !hidden ? (
+                            <div className={styles.chip} data-discipline={cls.discipline}>
+                              <span className={styles.chipName}>{cls.discipline}</span>
+                              <span className={styles.chipLevel}>{cls.level}</span>
+                            </div>
+                          ) : (
+                            <span className={styles.empty}>—</span>
+                          )}
+                        </td>
+                      )
+                    })}
+                  </tr>
+                )
+              })}
+            </tbody>
+          </table>
+        </div>
+        <p className={styles.scrollHint}>← Swipe to see all time slots →</p>
 
         <p className={styles.note}>
           * Schedule subject to change — contact us to confirm current times.

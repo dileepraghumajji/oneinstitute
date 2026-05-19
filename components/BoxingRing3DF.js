@@ -1,8 +1,9 @@
 'use client'
 
 import { useRef, useEffect, useMemo } from 'react'
-import { Canvas, useFrame } from '@react-three/fiber'
+import { Canvas, useFrame, useThree } from '@react-three/fiber'
 import { OrbitControls, Float, MeshDistortMaterial, Sparkles, Trail } from '@react-three/drei'
+import { useTheme } from '@/context/ThemeContext'
 import { EffectComposer, Bloom } from '@react-three/postprocessing'
 import * as THREE from 'three'
 
@@ -292,11 +293,21 @@ function SceneControls() {
 }
 
 // ── Full ring scene ──────────────────────────────────────────
+function FogThemer() {
+  const { scene } = useThree()
+  const { theme } = useTheme()
+  useEffect(() => {
+    if (scene.fog) scene.fog.color.set(theme === 'light' ? '#F0EAE0' : '#0a0a0a')
+  }, [theme, scene])
+  return null
+}
+
 function RingScene() {
-  const impactRef = useRef(null)
-  const flashRef  = useRef({ active: false, startTime: null })
-  const glowRef   = useRef(1.0)
-  const spotRef   = useRef()
+  const impactRef      = useRef(null)
+  const flashRef       = useRef({ active: false, startTime: null })
+  const glowRef        = useRef(1.0)
+  const spotRef        = useRef()
+  const readyFiredRef  = useRef(false)
 
   const emissiveMat = useMemo(() => new THREE.MeshStandardMaterial({
     color: C_ORANGE, emissive: C_ORANGE, emissiveIntensity: 2.5, roughness: 0.1, metalness: 0,
@@ -325,6 +336,10 @@ function RingScene() {
   }, [])
 
   useFrame(({ clock }) => {
+    if (!readyFiredRef.current) {
+      readyFiredRef.current = true
+      window.dispatchEvent(new CustomEvent('ring-ready'))
+    }
     const t = clock.getElapsedTime(); const fl = flashRef.current; const glow = glowRef.current
     if (fl.active) {
       if (fl.startTime === null) fl.startTime = t
@@ -348,6 +363,7 @@ function RingScene() {
 
   return (
     <>
+      <FogThemer />
       <fogExp2 attach="fog" args={['#0a0a0a', 0.009]} />
 
       <ambientLight color={0x111111} intensity={0.8} />

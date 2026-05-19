@@ -116,6 +116,17 @@ export default function ProgramsContent() {
           </Link>
         ))}
       </div>
+
+      <div className={styles.cta}>
+        <div>
+          <p className={styles.ctaText}>
+            FIRST CLASS<br />
+            IS ON <em>US.</em>
+          </p>
+          <p className={styles.ctaSub}>Walk-ins welcome · No sign-up fee · All levels</p>
+        </div>
+        <Link href="/contact" className={styles.ctaBtn}>Book Your First Class</Link>
+      </div>
     </div>
   )
 }

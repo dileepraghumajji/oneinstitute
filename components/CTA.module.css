@@ -137,6 +137,33 @@
   width: 100%;
 }
 
+/* ── Free class banner ── */
+.freeClassBanner {
+  width: 100%;
+  border: 1px solid var(--blood);
+  border-left: 3px solid var(--blood);
+  padding: 14px 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.freeClassLabel {
+  font-family: var(--font-mono), monospace;
+  font-size: 12px;
+  letter-spacing: 0.16em;
+  color: var(--blood);
+  text-transform: uppercase;
+}
+
+.freeClassSub {
+  font-family: var(--font-mono), monospace;
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  color: var(--bone-2);
+  text-transform: uppercase;
+}
+
 /* ── Contact form ── */
 
 .form {

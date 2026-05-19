@@ -20,6 +20,15 @@
   color: var(--bone);
 }
 
+.trustLine {
+  margin-top: 20px;
+  font-family: var(--font-mono), monospace;
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  color: var(--bone-2);
+  text-transform: uppercase;
+}
+
 @media (max-width: 768px) {
   .hero {
     padding: 120px 24px 48px;

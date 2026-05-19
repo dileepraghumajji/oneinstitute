@@ -120,6 +120,57 @@
   transform: translateX(0);
 }
 
+/* ── Programs-bottom CTA ── */
+.cta {
+  padding: 96px 60px;
+  border-top: 1px solid var(--ink-3);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 48px;
+  flex-wrap: wrap;
+}
+
+.ctaText {
+  font-family: var(--font-display), sans-serif;
+  font-size: clamp(2rem, 3.5vw, 3.5rem);
+  line-height: 0.92;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+  color: var(--bone);
+}
+
+.ctaText em {
+  font-style: normal;
+  color: var(--blood);
+}
+
+.ctaSub {
+  font-family: var(--font-mono), monospace;
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  color: var(--bone-2);
+  text-transform: uppercase;
+  margin-top: 14px;
+}
+
+.ctaBtn {
+  background: var(--blood);
+  color: var(--bone);
+  font-family: var(--font-sub-display), sans-serif;
+  font-size: 13px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 20px 48px;
+  text-decoration: none;
+  display: inline-block;
+  flex-shrink: 0;
+  transition: background 180ms var(--ease), transform 100ms;
+}
+
+.ctaBtn:hover  { background: var(--blood-deep); }
+.ctaBtn:active { transform: translateY(1px); }
+
 @media (max-width: 900px) {
   .hero {
     padding: 120px 28px 56px;

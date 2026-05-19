@@ -10,11 +10,12 @@ export default function ContactPage() {
   return (
     <div>
       <section className={styles.hero}>
-        <p className={styles.overline}>[+] Round One</p>
+        <p className={styles.overline}>[+] Start Here</p>
         <h1 className={styles.headline}>
-          WALK-INS<br />
-          WELCOME.
+          BOOK YOUR<br />
+          FIRST CLASS.
         </h1>
+        <p className={styles.trustLine}>First class is on us &middot; 4.9★ on Google &middot; Walk-ins welcome</p>
       </section>
 
       <CTA />

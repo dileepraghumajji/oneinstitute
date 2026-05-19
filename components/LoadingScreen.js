@@ -15,20 +15,43 @@ export default function LoadingScreen({ onComplete }) {
   const readyRef = useRef()
 
   useEffect(() => {
-    // Simulate loading progress
-    const interval = setInterval(() => {
-      setProgress(prev => {
-        if (prev >= 100) {
-          clearInterval(interval)
-          return 100
-        }
-        // Random increments for a "real" feel
-        const inc = Math.floor(Math.random() * 10) + 5
-        return Math.min(prev + inc, 100)
-      })
-    }, 150)
+    if (sessionStorage.getItem('one-visited')) {
+      onComplete?.()
+      return
+    }
 
-    return () => clearInterval(interval)
+    let rampId
+    let dismissed = false
+
+    // Push to 100% and let the progress-effect handle the slide-out
+    const dismiss = () => {
+      if (dismissed) return
+      dismissed = true
+      clearInterval(rampId)
+      setProgress(100)
+    }
+
+    // Ramp quickly to 85% — purely cosmetic, shows activity while the 3D canvas loads
+    rampId = setInterval(() => {
+      setProgress(prev => {
+        if (prev >= 85) return 85
+        return Math.min(prev + Math.floor(Math.random() * 10) + 5, 85)
+      })
+    }, 120)
+
+    // Real gate: BoxingRing3DF dispatches this on its first rendered frame
+    // (WebGL context live, scene drawn — safe to start Hero animations)
+    window.addEventListener('ring-ready', dismiss, { once: true })
+
+    // Fallback: covers sub-pages with no 3D canvas, WebGL-blocked browsers,
+    // and very slow connections — keeps the loader from hanging forever
+    const fallback = setTimeout(dismiss, 5000)
+
+    return () => {
+      clearInterval(rampId)
+      clearTimeout(fallback)
+      window.removeEventListener('ring-ready', dismiss)
+    }
   }, [])
 
   useEffect(() => {
@@ -38,6 +61,7 @@ export default function LoadingScreen({ onComplete }) {
 
       const tl = gsap.timeline({
         onComplete: () => {
+          sessionStorage.setItem('one-visited', '1')
           if (onComplete) onComplete()
         }
       })

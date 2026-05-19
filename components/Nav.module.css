@@ -9,13 +9,11 @@
   align-items: center;
   justify-content: space-between;
   padding: 0 48px;
-  transition: background 300ms var(--ease), backdrop-filter 300ms var(--ease);
+  transition: background 300ms var(--ease), border-color 300ms var(--ease);
 }
 
 .navScrolled {
-  background: rgba(10, 10, 10, 0.72);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
+  background: var(--nav-scrolled-bg);
   border-bottom: 1px solid var(--ink-3);
 }
 
@@ -42,10 +40,12 @@
   flex-shrink: 0;
 }
 
-.logoImage {
-  height: 36px;
+.logoSvg {
+  height: 34px;
   width: auto;
   display: block;
+  color: var(--bone);
+  transition: color 400ms var(--ease);
 }
 
 .links {
@@ -82,6 +82,15 @@
 
 .links a:hover::after {
   width: 100%;
+}
+
+.linkActive {
+  color: var(--bone) !important;
+}
+
+.linkActive::after {
+  width: 100% !important;
+  background: var(--blood) !important;
 }
 
 .cta {
@@ -175,9 +184,9 @@
 }
 
 @media (max-width: 900px) {
-  .links { display: none; }
-  .cta   { display: none; }
-  .muteBtn { display: none; }
+  .links     { display: none; }
+  .cta       { display: none; }
+  .iconGroup { display: none; }
   .hamburger { display: flex; }
   .nav { padding: 0 24px; }
   .navScrolled {
@@ -189,26 +198,46 @@
   .mobileMenu { padding: 24px; }
 }
 
-/* ---- 8.4 Mute toggle button ---- */
-.muteBtn {
+/* ── Desktop icon group (theme + mute) ── */
+.iconGroup {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  border-left: 1px solid var(--bone-2);
+  border-right: 1px solid var(--bone-2);
+  padding: 0 8px;
+  margin: 0 8px;
+  opacity: 0.45;
+  transition: opacity 200ms var(--ease);
+}
+
+.iconGroup:hover {
+  opacity: 1;
+}
+
+.iconBtn {
   display: flex;
   align-items: center;
   justify-content: center;
   width: 36px;
   height: 36px;
   background: none;
-  border: 1px solid var(--ink-3);
+  border: none;
   cursor: pointer;
-  color: var(--bone-2);
-  transition: color 180ms var(--ease), border-color 180ms var(--ease);
+  color: var(--bone);
+  transition: color 180ms var(--ease), opacity 180ms var(--ease);
   flex-shrink: 0;
 }
 
-.muteBtn:hover {
+.iconBtn:hover {
   color: var(--blood);
-  border-color: var(--blood);
 }
 
+.iconBtn:active {
+  opacity: 0.6;
+}
+
+/* ── Mobile full-width toggle buttons ── */
 .mobileMuteBtn {
   display: flex;
   align-items: center;
@@ -227,6 +256,28 @@
 }
 
 .mobileMuteBtn:hover {
+  color: var(--blood);
+  border-color: var(--blood);
+}
+
+.mobileThemeBtn {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: none;
+  border: 1px solid var(--ink-3);
+  cursor: pointer;
+  color: var(--bone-2);
+  font-family: var(--font-sub-display), sans-serif;
+  font-size: 13px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 14px 20px;
+  width: 100%;
+  transition: color 180ms var(--ease), border-color 180ms var(--ease);
+}
+
+.mobileThemeBtn:hover {
   color: var(--blood);
   border-color: var(--blood);
 }

@@ -52,29 +52,6 @@ export default function Philosophy() {
       }
     })
 
-    // Scrub parallax — left drifts up, right drifts down as section scrolls
-    gsap.to('.philosophy-left-anim', {
-      y: -40,
-      ease: 'none',
-      scrollTrigger: {
-        trigger: container.current,
-        start: 'top bottom',
-        end: 'bottom top',
-        scrub: 1,
-      }
-    })
-
-    gsap.to('.philosophy-right-anim', {
-      y: 40,
-      ease: 'none',
-      scrollTrigger: {
-        trigger: container.current,
-        start: 'top bottom',
-        end: 'bottom top',
-        scrub: 1,
-      }
-    })
-
     // Headline word clip-mask wipe reveal
     gsap.from('.philosophy-word', {
       y: '110%',

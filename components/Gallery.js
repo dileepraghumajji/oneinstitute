@@ -40,7 +40,8 @@ export default function Gallery() {
           stagger: { each: 0.07 },
           onComplete: () => {
             batch.forEach(el => {
-              gsap.set(el, { filter: 'brightness(1) grayscale(1) contrast(1.1)' })
+              gsap.set(el, { clearProps: 'filter' })
+              el.classList.add(styles.cellGrayscale)
             })
           },
         })

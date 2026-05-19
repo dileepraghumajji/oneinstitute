@@ -29,10 +29,20 @@ export default function Grain() {
       ctx.putImageData(imageData, 0, 0)
     }
 
-    drawNoise()
-    const interval = setInterval(drawNoise, 80)
+    let rafId
+    let lastDraw = 0
 
-    return () => clearInterval(interval)
+    function tick(now) {
+      if (now - lastDraw >= 80) {
+        drawNoise()
+        lastDraw = now
+      }
+      rafId = requestAnimationFrame(tick)
+    }
+
+    rafId = requestAnimationFrame(tick)
+
+    return () => cancelAnimationFrame(rafId)
   }, [])
 
   return (

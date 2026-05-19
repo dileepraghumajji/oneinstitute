@@ -4,11 +4,11 @@ import { useRef, useState } from 'react'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { useGSAP } from '@gsap/react'
-
-if (typeof window !== 'undefined') gsap.registerPlugin(ScrollTrigger)
 import { Phone } from 'lucide-react'
 import styles from './CTA.module.css'
 import { useSound } from '@/context/SoundContext'
+
+if (typeof window !== 'undefined') gsap.registerPlugin(ScrollTrigger)
 
 function handleMagnet(e) {
   if (typeof window !== 'undefined' && window.matchMedia('(pointer: coarse)').matches) return
@@ -33,7 +33,6 @@ function resetMagnet(e) {
 
 export default function CTA() {
   const container = useRef()
-  const arentRef = useRef()
   const [form, setForm] = useState({ name: '', phone: '', discipline: '', message: '' })
   const [errors, setErrors] = useState({})
   const [submitted, setSubmitted] = useState(false)
@@ -65,30 +64,6 @@ export default function CTA() {
       }
     })
 
-    // 9.5 Easter egg — pulse "AREN'T." glow 8s after section enters view
-    let eggTimer = null
-    ScrollTrigger.create({
-      trigger: container.current,
-      start: 'top 80%',
-      once: true,
-      onEnter: () => {
-        eggTimer = setTimeout(() => {
-          gsap.to(arentRef.current, {
-            textShadow: '0 0 20px var(--blood-glow), 0 0 40px rgba(255,83,0,0.4)',
-            color: 'var(--blood)',
-            duration: 0.4,
-            repeat: 3,
-            yoyo: true,
-            ease: 'power2.inOut',
-            onComplete: () => {
-              gsap.set(arentRef.current, { textShadow: '', color: '' })
-            }
-          })
-        }, 8000)
-      },
-    })
-
-    return () => clearTimeout(eggTimer)
   }, { scope: container })
 
   function handleChange(e) {
@@ -114,8 +89,9 @@ export default function CTA() {
       setErrors(newErrors)
       return
     }
-    // 8.3 — Play punch sound on submit
     playSound('punch')
+    const text = `Hi ONE Institute! I'd like to book a class.\nName: ${form.name}\nPhone: ${form.phone}\nDiscipline: ${form.discipline}${form.message ? `\nNote: ${form.message}` : ''}`
+    window.open(`https://wa.me/917411074751?text=${encodeURIComponent(text)}`, '_blank', 'noopener,noreferrer')
     setSubmitted(true)
   }
 
@@ -132,7 +108,7 @@ export default function CTA() {
               </span>
             ))}
             <span className={styles.lineWrap}>
-              <span ref={arentRef} className="cta-line">AREN&apos;T.</span>
+              <span className="cta-line">AREN&apos;T.</span>
             </span>
           </h2>
           <p className={`${styles.sub} cta-anim`}>
@@ -141,10 +117,29 @@ export default function CTA() {
         </div>
 
         <div className={`${styles.right} cta-anim`}>
+          <div className={styles.freeClassBanner}>
+            <span className={styles.freeClassLabel}>First Class Is On Us</span>
+            <span className={styles.freeClassSub}>No sign-up fee · Walk-ins welcome · All levels</span>
+          </div>
+
           {submitted ? (
             <div className={styles.success}>
               <span className={styles.successText}>ROUND ONE CONFIRMED.</span>
-              <span className={styles.successSub}>We'll call you.</span>
+              <span className={styles.successSub}>We have your details. Call or WhatsApp us to lock in your slot.</span>
+              <a href="tel:+917411074751" className={styles.phone}>
+                <span className={styles.phoneDot} />
+                <Phone size={16} strokeWidth={1.75} />
+                +91 74110 74751
+              </a>
+              <a
+                href="https://wa.me/917411074751"
+                target="_blank"
+                rel="noopener noreferrer"
+                className={styles.phone}
+              >
+                <span className={styles.phoneDot} />
+                WhatsApp Us
+              </a>
             </div>
           ) : (
             <form className={styles.form} onSubmit={handleSubmit} noValidate>

@@ -82,6 +82,8 @@ export default function RootLayout({ children }) {
         className={`${anton.variable} ${plusJakartaSans.variable} ${inter.variable} ${jetbrainsMono.variable}`}
       >
         <body>
+          {/* Runs synchronously before React hydration to prevent light-mode flash */}
+          <script dangerouslySetInnerHTML={{ __html: `(function(){try{var t=localStorage.getItem('one-theme');if(t)document.documentElement.setAttribute('data-theme',t)}catch(e){}})()` }} />
           <svg aria-hidden="true" focusable="false" style={{ position: 'absolute', width: 0, height: 0, overflow: 'hidden' }}>
             <defs>
               <filter id="duotone" colorInterpolationFilters="sRGB">

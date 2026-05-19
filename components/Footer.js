@@ -7,7 +7,7 @@ import { useGSAP } from '@gsap/react'
 import { Instagram, Phone, MapPin } from 'lucide-react'
 import styles from './Footer.module.css'
 
-const disciplines = ['Boxing', 'Muaythai', 'Kickboxing K1', 'Low Kick', 'Sparring']
+const disciplines = ['Boxing', 'Muaythai', 'Kickboxing K1', 'Low Kick', 'Karate']
 const quickLinks  = [
   { label: 'Programs',  href: '/programs' },
   { label: 'Schedule',  href: '/schedule' },
@@ -120,8 +120,7 @@ export default function Footer() {
             © {year} <span>ONE Institute of Martial Arts</span>. All rights reserved.
           </p>
           <ul className={styles.bottomLinks}>
-            <li><a href="#">Privacy</a></li>
-            <li><a href="#">Terms</a></li>
+            <li><a href="mailto:oneinstituteofmartialarts@gmail.com">Email Us</a></li>
           </ul>
         </div>
       </div>

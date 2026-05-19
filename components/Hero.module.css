@@ -21,28 +21,30 @@
   2. Left vignette        — anchors the eye to the left edge
 */
 .hero::before {
-  content: '';
+  display: none;
+}
+
+.heroOverlay {
   position: absolute;
   inset: 0;
   background:
     linear-gradient(
       to top,
-      #0a0a0a 0%,
-      #0a0a0a 12%,
-      rgba(10, 10, 10, 0.90) 30%,
-      rgba(10, 10, 10, 0.40) 52%,
-      rgba(10, 10, 10, 0.08) 70%,
+      var(--ink) 0%,
+      var(--ink) 12%,
+      var(--overlay-90) 30%,
+      var(--overlay-40) 52%,
+      var(--overlay-08) 70%,
       transparent 85%
     ),
     linear-gradient(
       to right,
-      rgba(10, 10, 10, 0.65) 0%,
-      rgba(10, 10, 10, 0.18) 32%,
+      var(--overlay-65) 0%,
+      var(--overlay-18) 32%,
       transparent 55%
     );
   z-index: 2;
   pointer-events: none;
-  opacity: var(--hero-before-opacity, 1);
   will-change: opacity;
 }
 
@@ -125,13 +127,35 @@
   padding: 16px 36px;
   text-decoration: none;
   display: inline-block;
-  border: 1px solid var(--ink-3);
+  border: 1px solid var(--bone-2);
   transition: border-color 180ms var(--ease), color 180ms var(--ease);
 }
 
 .btnSecondary:hover {
-  border-color: var(--bone-2);
+  border-color: var(--bone);
   color: var(--bone);
+}
+
+/* ── Google review trust badge ─────────────────────────── */
+.reviewBadge {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.stars {
+  color: #FF5300;
+  font-size: 13px;
+  letter-spacing: 2px;
+}
+
+.reviewText {
+  font-family: var(--font-mono), monospace;
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  color: var(--bone-2);
+  text-transform: uppercase;
 }
 
 /* ── Scroll hint — bottom left below CTAs ──────────────── */

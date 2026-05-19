@@ -1,11 +1,8 @@
 .ticker {
   background: var(--blood);
   overflow: hidden;
-  padding: 12px 0;
+  padding: 14px 0;
   white-space: nowrap;
-  display: flex;
-  flex-direction: column;
-  gap: 0;
 }
 
 .ticker:hover .track {
@@ -14,40 +11,43 @@
 
 .track {
   display: inline-flex;
-  animation: marquee 18s linear infinite;
-}
-
-.trackReverse {
-  animation-direction: reverse;
+  animation: marquee 20s linear infinite;
 }
 
 .item {
   font-family: var(--font-display), sans-serif;
-  font-size: 14px;
-  letter-spacing: 0.18em;
+  font-size: 13px;
+  letter-spacing: 0.2em;
   text-transform: uppercase;
   color: var(--bone);
-  padding: 6px 32px;
   display: inline-flex;
   align-items: center;
-  gap: 32px;
-  transition: letter-spacing 200ms var(--ease), font-weight 200ms;
-}
-
-.ticker[data-fast='1'] .item {
-  font-weight: 900;
-  letter-spacing: -0.04em;
+  gap: 20px;
+  padding: 0 20px;
 }
 
 .dot {
   width: 5px;
   height: 5px;
   border-radius: 50%;
-  background: rgba(244, 239, 231, 0.5);
+  background: rgba(244, 239, 231, 0.45);
   flex-shrink: 0;
 }
 
-.swordIcon {
-  color: rgba(244, 239, 231, 0.5);
-  flex-shrink: 0;
+@media (max-width: 768px) {
+  .ticker {
+    padding: 12px 0;
+  }
+
+  .item {
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    gap: 14px;
+    padding: 0 14px;
+  }
+
+  .dot {
+    width: 4px;
+    height: 4px;
+  }
 }

@@ -1,15 +1,16 @@
 'use client'
 
 import { useState, useEffect, useRef } from 'react'
-import Image from 'next/image'
 import { Link } from 'next-view-transitions'
+import { usePathname } from 'next/navigation'
 import gsap from 'gsap'
 import { useGSAP } from '@gsap/react'
-import { Volume2, VolumeX } from 'lucide-react'
+import { Volume2, VolumeX, Sun, Moon } from 'lucide-react'
 import styles from './Nav.module.css'
 
 import { useLoading } from '@/context/LoadingContext'
 import { useSound } from '@/context/SoundContext'
+import { useTheme } from '@/context/ThemeContext'
 
 const navLinks = [
   { label: 'Programs', href: '/programs' },
@@ -21,6 +22,8 @@ const navLinks = [
 export default function Nav() {
   const { isLoaded } = useLoading()
   const { isMuted, toggleMute } = useSound()
+  const { theme, toggleTheme, mounted } = useTheme()
+  const pathname = usePathname()
   const container = useRef()
   const [scrolled, setScrolled]   = useState(false)
   const [menuOpen, setMenuOpen] = useState(false)
@@ -53,37 +56,59 @@ export default function Nav() {
   return (
     <>
       <nav className={`${styles.nav} ${scrolled ? styles.navScrolled : ''}`} ref={container}>
-        <Link href="/" className={styles.logo}>
-          <Image
-            src="/logo.svg"
-            alt="ONE Institute of Martial Arts"
-            width={220}
-            height={40}
-            className={styles.logoImage}
-            priority
-          />
+        <Link href="/" className={styles.logo} aria-label="ONE Institute of Martial Arts">
+          <svg
+            width="220" height="40" viewBox="0 0 280 48" fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+            className={styles.logoSvg}
+            aria-hidden="true"
+          >
+            <rect x="0" y="4" width="40" height="40" stroke="#FF5300" strokeWidth="2.5" fill="none"/>
+            <text x="20" y="32" fontFamily="Arial Black, Arial, sans-serif" fontWeight="900" fontSize="22" fill="#FF5300" textAnchor="middle">1</text>
+            <text x="54" y="32" fontFamily="Arial Black, Arial, sans-serif" fontWeight="900" fontSize="28" letterSpacing="3" fill="currentColor" textAnchor="start">ONE</text>
+            <text x="132" y="32" fontFamily="Arial, sans-serif" fontWeight="400" fontSize="12" letterSpacing="5" fill="currentColor" textAnchor="start" opacity="0.65">INSTITUTE</text>
+          </svg>
         </Link>
 
         <ul className={styles.links}>
           {navLinks.map(l => (
             <li key={l.label}>
-              <Link href={l.href}>{l.label}</Link>
+              <Link
+                href={l.href}
+                className={pathname === l.href || pathname.startsWith(l.href + '/') ? styles.linkActive : ''}
+              >
+                {l.label}
+              </Link>
             </li>
           ))}
         </ul>
 
-        {/* 8.4 — Mute toggle */}
-        <button
-          className={styles.muteBtn}
-          onClick={toggleMute}
-          aria-label={isMuted ? 'Unmute sounds' : 'Mute sounds'}
-          title={isMuted ? 'Sound off — click to enable' : 'Sound on — click to mute'}
-        >
-          {isMuted
-            ? <VolumeX size={18} strokeWidth={1.75} />
-            : <Volume2 size={18} strokeWidth={1.75} />
-          }
-        </button>
+        <div className={styles.iconGroup}>
+          {mounted && (
+            <button
+              className={styles.iconBtn}
+              onClick={toggleTheme}
+              aria-label={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
+              title={theme === 'dark' ? 'Light mode' : 'Dark mode'}
+            >
+              {theme === 'dark'
+                ? <Sun size={18} strokeWidth={1.5} />
+                : <Moon size={18} strokeWidth={1.5} />
+              }
+            </button>
+          )}
+          <button
+            className={styles.iconBtn}
+            onClick={toggleMute}
+            aria-label={isMuted ? 'Unmute sounds' : 'Mute sounds'}
+            title={isMuted ? 'Sound off — click to enable' : 'Sound on — click to mute'}
+          >
+            {isMuted
+              ? <VolumeX size={18} strokeWidth={1.5} />
+              : <Volume2 size={18} strokeWidth={1.5} />
+            }
+          </button>
+        </div>
 
         <Link href="/contact" className={styles.cta}>Book a Class</Link>
 
@@ -103,6 +128,20 @@ export default function Nav() {
             {l.label}
           </Link>
         ))}
+        {/* Mobile theme toggle */}
+        {mounted && (
+          <button
+            className={styles.mobileThemeBtn}
+            onClick={toggleTheme}
+            aria-label={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
+          >
+            {theme === 'dark'
+              ? <><Sun size={16} strokeWidth={1.75} /> Light Mode</>
+              : <><Moon size={16} strokeWidth={1.75} /> Dark Mode</>
+            }
+          </button>
+        )}
+
         {/* Mobile mute toggle */}
         <button
           className={styles.mobileMuteBtn}
